@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Memory } from '@/types/database';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -28,6 +28,32 @@ export const MemoryCard: React.FC<MemoryCardProps> = ({
   const fingerprint = useFingerprint();
   const { toast } = useToast();
 
+  useEffect(() => {
+    // Check if current user has liked this memory
+    const checkIfLiked = async () => {
+      if (!fingerprint) return;
+      
+      try {
+        const { data, error } = await supabase
+          .from('reactions')
+          .select('id')
+          .eq('memory_id', memory.id)
+          .eq('author_fingerprint', fingerprint)
+          .eq('emoji', '❤️')
+          .single();
+
+        if (data && !error) {
+          setIsLiked(true);
+        }
+      } catch (error) {
+        // User hasn't liked this memory yet
+        setIsLiked(false);
+      }
+    };
+
+    checkIfLiked();
+  }, [memory.id, fingerprint]);
+
   const handleReaction = async (emoji: string) => {
     if (!fingerprint) return;
 
@@ -42,16 +68,30 @@ export const MemoryCard: React.FC<MemoryCardProps> = ({
     }
 
     try {
-      const { error } = await supabase
-        .from('reactions')
-        .upsert({
-          memory_id: memory.id,
-          emoji,
-          author_fingerprint: fingerprint,
-        });
+      if (isLiked) {
+        // Remove the like
+        const { error } = await supabase
+          .from('reactions')
+          .delete()
+          .eq('memory_id', memory.id)
+          .eq('author_fingerprint', fingerprint)
+          .eq('emoji', emoji);
 
-      if (error) throw error;
-      setIsLiked(!isLiked);
+        if (error) throw error;
+        setIsLiked(false);
+      } else {
+        // Add the like
+        const { error } = await supabase
+          .from('reactions')
+          .insert({
+            memory_id: memory.id,
+            emoji,
+            author_fingerprint: fingerprint,
+          });
+
+        if (error) throw error;
+        setIsLiked(true);
+      }
     } catch (error: any) {
       toast({
         title: "Failed to add reaction",

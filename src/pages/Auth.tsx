@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
 import { useAuth } from '@/contexts/AuthContext';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { Footer } from '@/components/Footer';
 import { useToast } from '@/hooks/use-toast';
 import { Chrome } from 'lucide-react';
 
@@ -249,6 +250,8 @@ const Auth = () => {
           </Tabs>
         </CardContent>
       </Card>
+      
+      <Footer />
     </div>
   );
 };

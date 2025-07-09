@@ -17,9 +17,10 @@ import {
   Calendar, 
   Users, 
   ArrowLeft,
-  Settings,
   Crown
 } from 'lucide-react';
+import { ThemeToggle } from '@/components/theme-toggle';
+import { Footer } from '@/components/Footer';
 
 const WallView = () => {
   const { wallId } = useParams<{ wallId: string }>();
@@ -162,21 +163,18 @@ const WallView = () => {
       >
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
-            <Button 
-              variant="ghost" 
-              onClick={() => navigate('/')}
-              className="mb-4"
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back
-            </Button>
-            
-            {isHost && (
-              <Button variant="outline" size="sm">
-                <Settings className="mr-2 h-4 w-4" />
-                Manage
+            <div className="flex items-center gap-4">
+              <Button 
+                variant="ghost" 
+                onClick={() => navigate('/')}
+                className="mb-4"
+              >
+                <ArrowLeft className="mr-2 h-4 w-4" />
+                Back
               </Button>
-            )}
+            </div>
+            
+            <ThemeToggle />
           </div>
 
           <div className="space-y-4">
@@ -192,48 +190,15 @@ const WallView = () => {
 
             <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
               <div className="flex items-center gap-1">
-                <Calendar className="h-4 w-4" />
-                {wall.is_paid ? (
-                  <span>Unlimited access</span>
-                ) : (
-                  <span>{daysLeft} days left</span>
-                )}
-              </div>
-              <div className="flex items-center gap-1">
                 <Users className="h-4 w-4" />
                 <span>{memoryCount} memories</span>
               </div>
             </div>
 
-            {!wall.is_paid && (isNearLimit || daysLeft <= 2) && (
-              <Card className="border-orange-200 bg-orange-50">
-                <CardContent className="p-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="font-medium text-orange-800">
-                        {isExpired ? 'Trial Expired' : 'Trial Ending Soon'}
-                      </p>
-                      <p className="text-sm text-orange-600">
-                        {isExpired 
-                          ? 'Upgrade to continue adding memories'
-                          : `${daysLeft} days left or ${wall.max_memories - memoryCount} memories remaining`
-                        }
-                      </p>
-                    </div>
-                    {isHost && (
-                      <Button size="sm" style={{ backgroundColor: wall.theme_color }}>
-                        Upgrade ($4.99)
-                      </Button>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            )}
 
             <div className="flex flex-wrap gap-2">
               <Button 
                 onClick={() => setIsAddModalOpen(true)}
-                disabled={isExpired}
                 style={{ backgroundColor: wall.theme_color }}
                 className="text-white hover:opacity-90"
               >
@@ -306,6 +271,8 @@ const WallView = () => {
         variant="destructive"
         confirmText="Delete"
       />
+      
+      <Footer />
     </div>
   );
 };

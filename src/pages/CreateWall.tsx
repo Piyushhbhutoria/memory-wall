@@ -9,6 +9,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { ArrowLeft, Palette } from 'lucide-react';
 import { wallSchema } from '@/lib/security';
+import { Footer } from '@/components/Footer';
 
 const THEME_COLORS = [
   '#6366f1', '#8b5cf6', '#ec4899', '#ef4444', 
@@ -138,9 +139,9 @@ const CreateWall = () => {
 
               <div className="pt-4 border-t">
                 <div className="text-sm text-muted-foreground mb-4">
-                  <p>• Free for 7 days or first 200 memories</p>
-                  <p>• One-time $4.99 payment to unlock unlimited access</p>
+                  <p>• Always free, unlimited memories</p>
                   <p>• Anyone can contribute with just a link</p>
+                  <p>• Share with QR codes or direct links</p>
                 </div>
                 <Button type="submit" className="w-full" disabled={isLoading}>
                   {isLoading ? 'Creating...' : 'Create Wall'}
@@ -150,6 +151,8 @@ const CreateWall = () => {
           </CardContent>
         </Card>
       </div>
+      
+      <Footer />
     </div>
   );
 };

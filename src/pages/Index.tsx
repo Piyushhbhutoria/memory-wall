@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/contexts/AuthContext';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { Footer } from '@/components/Footer';
 import { supabase } from '@/integrations/supabase/client';
 import { Wall } from '@/types/database';
 import { 
@@ -129,63 +130,65 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Features Section */}
-      <div className="py-16 bg-card">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-foreground mb-4">
-              Perfect for Any Occasion
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              From graduations to birthdays, create lasting memories together
-            </p>
-          </div>
+      {/* Features Section - Only show when not logged in */}
+      {!user && (
+        <div className="py-16 bg-card">
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-foreground mb-4">
+                Perfect for Any Occasion
+              </h2>
+              <p className="text-lg text-muted-foreground">
+                From graduations to birthdays, create lasting memories together
+              </p>
+            </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="text-center">
-              <CardHeader>
-                <div className="mx-auto w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-                  <Heart className="h-6 w-6 text-primary" />
-                </div>
-                <CardTitle>Zero Friction</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  No sign-ups required for contributors. Just share a link or QR code and start collecting memories.
-                </CardDescription>
-              </CardContent>
-            </Card>
+            <div className="grid md:grid-cols-3 gap-8">
+              <Card className="text-center">
+                <CardHeader>
+                  <div className="mx-auto w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                    <Heart className="h-6 w-6 text-primary" />
+                  </div>
+                  <CardTitle>Zero Friction</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription>
+                    No sign-ups required for contributors. Just share a link or QR code and start collecting memories.
+                  </CardDescription>
+                </CardContent>
+              </Card>
 
-            <Card className="text-center">
-              <CardHeader>
-                <div className="mx-auto w-12 h-12 bg-secondary/50 rounded-lg flex items-center justify-center mb-4">
-                  <Users className="h-6 w-6 text-secondary-foreground" />
-                </div>
-                <CardTitle>Rich Content</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  Text notes, hand-drawn sketches, photos, GIFs, and short videos. Express memories any way you want.
-                </CardDescription>
-              </CardContent>
-            </Card>
+              <Card className="text-center">
+                <CardHeader>
+                  <div className="mx-auto w-12 h-12 bg-secondary/50 rounded-lg flex items-center justify-center mb-4">
+                    <Users className="h-6 w-6 text-secondary-foreground" />
+                  </div>
+                  <CardTitle>Rich Content</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription>
+                    Text notes, hand-drawn sketches, photos, GIFs, and short videos. Express memories any way you want.
+                  </CardDescription>
+                </CardContent>
+              </Card>
 
-            <Card className="text-center">
-              <CardHeader>
-                <div className="mx-auto w-12 h-12 bg-accent/50 rounded-lg flex items-center justify-center mb-4">
-                  <Gift className="h-6 w-6 text-accent-foreground" />
-                </div>
-                <CardTitle>Always Free</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  Create unlimited memory walls and collect unlimited memories. Completely free, forever. No hidden costs.
-                </CardDescription>
-              </CardContent>
-            </Card>
+              <Card className="text-center">
+                <CardHeader>
+                  <div className="mx-auto w-12 h-12 bg-accent/50 rounded-lg flex items-center justify-center mb-4">
+                    <Gift className="h-6 w-6 text-accent-foreground" />
+                  </div>
+                  <CardTitle>Always Free</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription>
+                    Create unlimited memory walls and collect unlimited memories. Completely free, forever. No hidden costs.
+                  </CardDescription>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* User Walls Section */}
       {user && (
@@ -239,7 +242,6 @@ const Index = () => {
                     <CardContent>
                       <div className="flex items-center justify-between text-sm text-muted-foreground">
                         <span>Created {new Date(wall.created_at).toLocaleDateString()}</span>
-                        <Badge variant="secondary">Free Forever</Badge>
                       </div>
                     </CardContent>
                   </Card>
@@ -249,6 +251,8 @@ const Index = () => {
           </div>
         </div>
       )}
+
+      <Footer />
     </div>
   );
 };
