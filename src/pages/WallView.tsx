@@ -167,7 +167,7 @@ const WallView = () => {
   const isExpired = daysLeft === 0 && !wall.is_paid;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
       <div 
         className="border-b"
@@ -293,12 +293,14 @@ const WallView = () => {
       </div>
 
       {/* Memories Grid */}
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <WallGrid 
-          wallId={wallId!}
-          memories={memories}
-          onMemoryUpdate={loadMemories}
-        />
+      <div className="flex-1">
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          <WallGrid 
+            wallId={wallId!}
+            memories={memories}
+            onMemoryUpdate={loadMemories}
+          />
+        </div>
       </div>
 
       {/* Add Memory Modal */}
