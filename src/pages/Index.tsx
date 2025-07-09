@@ -63,7 +63,7 @@ const Index = () => {
   };
 
   const handleWallUpdated = () => {
-    loadUserWalls(); // Refresh the list
+    loadUserWalls(); // Refresh the list to show updated theme colors
   };
 
   if (loading) {

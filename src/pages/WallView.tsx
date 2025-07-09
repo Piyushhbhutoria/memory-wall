@@ -56,7 +56,8 @@ const WallView = () => {
   };
 
   const handleWallUpdated = () => {
-    loadWall(); // Refresh wall data
+    loadWall(); // Refresh wall data to get updated theme
+    loadMemories(); // Refresh memories in case anything changed
   };
 
   useEffect(() => {

@@ -20,13 +20,15 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { Wall } from '@/types/database';
+import { ChangeThemeDialog } from '@/components/ChangeThemeDialog';
 import { 
   MoreVertical, 
   Trash2, 
   Share2, 
   Shield, 
   Eye, 
-  EyeOff 
+  EyeOff,
+  Palette
 } from 'lucide-react';
 
 interface WallManagementProps {
@@ -44,6 +46,7 @@ export const WallManagement: React.FC<WallManagementProps> = ({
   const [isToggling, setIsToggling] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [showToggleDialog, setShowToggleDialog] = useState(false);
+  const [showThemeDialog, setShowThemeDialog] = useState(false);
   const { toast } = useToast();
 
   const handleDeleteWall = async () => {
@@ -127,6 +130,11 @@ export const WallManagement: React.FC<WallManagementProps> = ({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-48 card-elevated">
+          <DropdownMenuItem onClick={() => setShowThemeDialog(true)}>
+            <Palette className="h-4 w-4" />
+            <span className="ml-2">Change Theme</span>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setShowToggleDialog(true)} disabled={isToggling}>
             {getShareStatusIcon()}
             <span className="ml-2">{getShareStatusText()}</span>
@@ -203,6 +211,14 @@ export const WallManagement: React.FC<WallManagementProps> = ({
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Change Theme Dialog */}
+      <ChangeThemeDialog
+        isOpen={showThemeDialog}
+        onOpenChange={setShowThemeDialog}
+        wall={wall}
+        onThemeChanged={onWallUpdated}
+      />
     </>
   );
 };
