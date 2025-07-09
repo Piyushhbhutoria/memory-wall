@@ -7,6 +7,7 @@ import { Heart, MessageCircle, X } from 'lucide-react';
 import { useFingerprint } from '@/hooks/useFingerprint';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { sanitizeContent, rateLimiter } from '@/lib/security';
 
 interface MemoryCardProps {
   memory: Memory;
@@ -29,6 +30,16 @@ export const MemoryCard: React.FC<MemoryCardProps> = ({
 
   const handleReaction = async (emoji: string) => {
     if (!fingerprint) return;
+
+    // Rate limiting check
+    if (!rateLimiter.isAllowed(fingerprint)) {
+      toast({
+        title: "Too many requests",
+        description: "Please wait before reacting again",
+        variant: "destructive"
+      });
+      return;
+    }
 
     try {
       const { error } = await supabase
@@ -64,9 +75,12 @@ export const MemoryCard: React.FC<MemoryCardProps> = ({
       case 'text':
         return (
           <div className="p-4">
-            <p className="text-sm leading-relaxed whitespace-pre-wrap">
-              {memory.content}
-            </p>
+            <div 
+              className="text-sm leading-relaxed whitespace-pre-wrap"
+              dangerouslySetInnerHTML={{ 
+                __html: sanitizeContent(memory.content || '') 
+              }}
+            />
           </div>
         );
       
@@ -82,7 +96,12 @@ export const MemoryCard: React.FC<MemoryCardProps> = ({
             />
             {memory.content && (
               <div className="p-4">
-                <p className="text-sm">{memory.content}</p>
+                <div 
+                  className="text-sm"
+                  dangerouslySetInnerHTML={{ 
+                    __html: sanitizeContent(memory.content || '') 
+                  }}
+                />
               </div>
             )}
           </div>
@@ -99,7 +118,12 @@ export const MemoryCard: React.FC<MemoryCardProps> = ({
             />
             {memory.content && (
               <div className="p-4">
-                <p className="text-sm">{memory.content}</p>
+                <div 
+                  className="text-sm"
+                  dangerouslySetInnerHTML={{ 
+                    __html: sanitizeContent(memory.content || '') 
+                  }}
+                />
               </div>
             )}
           </div>
@@ -116,7 +140,12 @@ export const MemoryCard: React.FC<MemoryCardProps> = ({
             />
             {memory.content && (
               <div className="p-4">
-                <p className="text-sm">{memory.content}</p>
+                <div 
+                  className="text-sm"
+                  dangerouslySetInnerHTML={{ 
+                    __html: sanitizeContent(memory.content || '') 
+                  }}
+                />
               </div>
             )}
           </div>

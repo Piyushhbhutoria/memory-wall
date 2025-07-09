@@ -8,6 +8,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { ArrowLeft, Palette } from 'lucide-react';
+import { wallSchema } from '@/lib/security';
 
 const THEME_COLORS = [
   '#6366f1', '#8b5cf6', '#ec4899', '#ef4444', 
@@ -32,6 +33,18 @@ const CreateWall = () => {
         variant: "destructive",
       });
       navigate('/auth');
+      return;
+    }
+
+    // Input validation
+    try {
+      wallSchema.parse({ name });
+    } catch (error: any) {
+      toast({
+        title: "Invalid wall name",
+        description: error.errors?.[0]?.message || "Please enter a valid wall name",
+        variant: "destructive",
+      });
       return;
     }
 
@@ -95,7 +108,8 @@ const CreateWall = () => {
                   type="text"
                   placeholder="Sarah's Graduation Party"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => setName(e.target.value.slice(0, 100))}
+                  maxLength={100}
                   required
                 />
               </div>

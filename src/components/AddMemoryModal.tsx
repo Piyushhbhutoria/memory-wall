@@ -10,6 +10,7 @@ import { Upload, Type, Palette, Camera } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useFingerprint } from '@/hooks/useFingerprint';
 import { useToast } from '@/hooks/use-toast';
+import { memoryContentSchema, validateFile, rateLimiter } from '@/lib/security';
 
 interface AddMemoryModalProps {
   isOpen: boolean;
@@ -52,11 +53,11 @@ export const AddMemoryModal: React.FC<AddMemoryModalProps> = ({
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // Check file size (20MB limit)
-      if (file.size > 20 * 1024 * 1024) {
+      const validation = validateFile(file);
+      if (!validation.isValid) {
         toast({
-          title: "File too large",
-          description: "Please select a file smaller than 20MB.",
+          title: "Invalid file",
+          description: validation.error,
           variant: "destructive",
         });
         return;
@@ -105,10 +106,29 @@ export const AddMemoryModal: React.FC<AddMemoryModalProps> = ({
   };
 
   const handleSubmit = async () => {
-    if (!authorName.trim()) {
+    // Rate limiting check
+    if (!rateLimiter.isAllowed(fingerprint || 'anonymous')) {
       toast({
-        title: "Name required",
-        description: "Please enter your name.",
+        title: "Too many requests",
+        description: "Please wait before adding another memory",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Input validation
+    try {
+      const validationData = {
+        content: textContent,
+        authorName: authorName.trim(),
+        type: activeTab as 'text' | 'image' | 'video' | 'sketch'
+      };
+      
+      memoryContentSchema.parse(validationData);
+    } catch (error: any) {
+      toast({
+        title: "Invalid input",
+        description: error.errors?.[0]?.message || "Please check your input",
         variant: "destructive",
       });
       return;
@@ -244,8 +264,9 @@ export const AddMemoryModal: React.FC<AddMemoryModalProps> = ({
             <Input
               id="author-name"
               value={authorName}
-              onChange={(e) => setAuthorName(e.target.value)}
+              onChange={(e) => setAuthorName(e.target.value.slice(0, 50))}
               placeholder="Enter your name"
+              maxLength={50}
               required
             />
           </div>
@@ -272,9 +293,10 @@ export const AddMemoryModal: React.FC<AddMemoryModalProps> = ({
                 <Textarea
                   id="text-content"
                   value={textContent}
-                  onChange={(e) => setTextContent(e.target.value)}
+                  onChange={(e) => setTextContent(e.target.value.slice(0, 2000))}
                   placeholder="Share your thoughts, memories, or well-wishes..."
                   className="min-h-[120px]"
+                  maxLength={2000}
                 />
               </div>
             </TabsContent>
