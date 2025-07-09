@@ -81,18 +81,32 @@ const Auth = () => {
   };
 
   const handleGoogleSignIn = async () => {
+    console.log('Google sign-in button clicked');
     setIsLoading(true);
-    const { error } = await signInWithGoogle();
     
-    if (error) {
+    try {
+      const { error } = await signInWithGoogle();
+      console.log('Google sign-in response:', { error });
+      
+      if (error) {
+        console.error('Google sign-in error:', error);
+        toast({
+          title: "Google sign in failed",
+          description: error.message,
+          variant: "destructive",
+        });
+        setIsLoading(false);
+      }
+      // Note: If successful, the user will be redirected by Google OAuth flow
+    } catch (err) {
+      console.error('Unexpected error during Google sign-in:', err);
       toast({
         title: "Google sign in failed",
-        description: error.message,
+        description: "An unexpected error occurred",
         variant: "destructive",
       });
       setIsLoading(false);
     }
-    // Note: If successful, the user will be redirected by Google OAuth flow
   };
 
   return (
