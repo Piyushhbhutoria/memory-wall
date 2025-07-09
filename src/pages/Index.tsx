@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/contexts/AuthContext';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Footer } from '@/components/Footer';
+import { WallManagement } from '@/components/WallManagement';
 import { supabase } from '@/integrations/supabase/client';
 import { Wall } from '@/types/database';
 import { 
@@ -15,7 +16,9 @@ import {
   Heart,
   Sparkles,
   ArrowRight,
-  Gift
+  Gift,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 
 const Index = () => {
@@ -39,7 +42,6 @@ const Index = () => {
         .from('walls')
         .select('*')
         .eq('host_user_id', user.id)
-        .eq('is_active', true)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
@@ -54,6 +56,14 @@ const Index = () => {
   const handleSignOut = async () => {
     await signOut();
     navigate('/auth');
+  };
+
+  const handleWallDeleted = () => {
+    loadUserWalls(); // Refresh the list
+  };
+
+  const handleWallUpdated = () => {
+    loadUserWalls(); // Refresh the list
   };
 
   if (loading) {
@@ -241,18 +251,30 @@ const Index = () => {
                 {userWalls.map((wall, index) => (
                   <Card 
                     key={wall.id} 
-                    className="card-elevated card-interactive group animate-fade-in"
-                    onClick={() => navigate(`/wall/${wall.id}`)}
+                    className="card-elevated group animate-fade-in relative"
                     style={{ animationDelay: `${index * 0.1}s` }}
                   >
                     <CardHeader>
                       <div className="flex items-center justify-between">
-                        <CardTitle className="text-xl font-serif group-hover:text-primary transition-colors">
-                          {wall.name}
-                        </CardTitle>
-                        <div 
-                          className="w-5 h-5 rounded-full border-2 border-white shadow-md group-hover:scale-110 transition-transform"
-                          style={{ backgroundColor: wall.theme_color }}
+                        <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate(`/wall/${wall.id}`)}>
+                          <CardTitle className="text-xl font-serif group-hover:text-primary transition-colors">
+                            {wall.name}
+                          </CardTitle>
+                          <div 
+                            className="w-5 h-5 rounded-full border-2 border-white shadow-md group-hover:scale-110 transition-transform"
+                            style={{ backgroundColor: wall.theme_color }}
+                          />
+                          {!wall.is_active && (
+                            <Badge variant="secondary" className="flex items-center gap-1">
+                              <EyeOff className="h-3 w-3" />
+                              Private
+                            </Badge>
+                          )}
+                        </div>
+                        <WallManagement 
+                          wall={wall} 
+                          onWallDeleted={handleWallDeleted}
+                          onWallUpdated={handleWallUpdated}
                         />
                       </div>
                     </CardHeader>
@@ -261,6 +283,19 @@ const Index = () => {
                         <div className="flex items-center gap-2">
                           <Calendar className="h-4 w-4" />
                           <span>Created {new Date(wall.created_at).toLocaleDateString()}</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          {wall.is_active ? (
+                            <>
+                              <Eye className="h-4 w-4 text-green-500" />
+                              <span className="text-green-500">Shared</span>
+                            </>
+                          ) : (
+                            <>
+                              <EyeOff className="h-4 w-4 text-muted-foreground" />
+                              <span>Private</span>
+                            </>
+                          )}
                         </div>
                       </div>
                     </CardContent>

@@ -17,9 +17,12 @@ import {
   Calendar, 
   Users, 
   ArrowLeft,
-  Crown
+  Crown,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { WallManagement } from '@/components/WallManagement';
 import { Footer } from '@/components/Footer';
 
 const WallView = () => {
@@ -47,6 +50,14 @@ const WallView = () => {
 
   const isHost = user && wall && user.id === wall.host_user_id;
   const wallUrl = `${window.location.origin}/wall/${wallId}`;
+
+  const handleWallDeleted = () => {
+    navigate('/');
+  };
+
+  const handleWallUpdated = () => {
+    loadWall(); // Refresh wall data
+  };
 
   useEffect(() => {
     if (wallId) {
@@ -178,23 +189,61 @@ const WallView = () => {
           </div>
 
           <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <h1 className="text-3xl font-bold">{wall.name}</h1>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <h1 className="text-3xl font-bold">{wall.name}</h1>
+                {isHost && (
+                  <Badge variant="secondary">
+                    <Crown className="mr-1 h-3 w-3" />
+                    Host
+                  </Badge>
+                )}
+                {!wall.is_active && (
+                  <Badge variant="outline" className="flex items-center gap-1">
+                    <EyeOff className="h-3 w-3" />
+                    Private
+                  </Badge>
+                )}
+              </div>
+              
               {isHost && (
-                <Badge variant="secondary">
-                  <Crown className="mr-1 h-3 w-3" />
-                  Host
-                </Badge>
+                <WallManagement 
+                  wall={wall} 
+                  onWallDeleted={handleWallDeleted}
+                  onWallUpdated={handleWallUpdated}
+                />
               )}
             </div>
 
-            <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+            <div className="flex items-center gap-3 text-sm text-muted-foreground">
               <div className="flex items-center gap-1">
                 <Users className="h-4 w-4" />
                 <span>{memoryCount} memories</span>
               </div>
+              
+              <div className="flex items-center gap-1">
+                {wall.is_active ? (
+                  <>
+                    <Eye className="h-4 w-4 text-green-500" />
+                    <span className="text-green-500">Publicly shared</span>
+                  </>
+                ) : (
+                  <>
+                    <EyeOff className="h-4 w-4 text-muted-foreground" />
+                    <span>Private (not shared)</span>
+                  </>
+                )}
+              </div>
             </div>
 
+            {!wall.is_active && (
+              <div className="bg-muted/50 border border-border rounded-lg p-4">
+                <p className="text-sm text-muted-foreground">
+                  <EyeOff className="inline h-4 w-4 mr-1" />
+                  This wall is currently private. Only you can see it. Use the management menu to resume sharing.
+                </p>
+              </div>
+            )}
 
             <div className="flex flex-wrap gap-2">
               <Button 
@@ -206,21 +255,25 @@ const WallView = () => {
                 Add Memory
               </Button>
               
-              <Button variant="outline" onClick={handleShare}>
-                <Share2 className="mr-2 h-4 w-4" />
-                Share Wall
-              </Button>
-              
-              <Button 
-                variant="outline" 
-                onClick={() => setShowQR(!showQR)}
-              >
-                <QrCode className="mr-2 h-4 w-4" />
-                QR Code
-              </Button>
+              {wall.is_active && (
+                <>
+                  <Button variant="outline" onClick={handleShare}>
+                    <Share2 className="mr-2 h-4 w-4" />
+                    Share Wall
+                  </Button>
+                  
+                  <Button 
+                    variant="outline" 
+                    onClick={() => setShowQR(!showQR)}
+                  >
+                    <QrCode className="mr-2 h-4 w-4" />
+                    QR Code
+                  </Button>
+                </>
+              )}
             </div>
 
-            {showQR && (
+            {showQR && wall.is_active && (
               <Card className="w-fit">
                 <CardContent className="p-4 text-center">
                   <img 
