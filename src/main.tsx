@@ -10,7 +10,7 @@ const queryClient = new QueryClient()
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider defaultTheme="light" storageKey="wallable-ui-theme">
+      <ThemeProvider defaultTheme="light" storageKey="wish-wall-ui-theme">
         <App />
       </ThemeProvider>
     </QueryClientProvider>

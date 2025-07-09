@@ -95,7 +95,7 @@ export const generateSecureFingerprint = (): string => {
     ctx.fillStyle = '#f60';
     ctx.fillRect(125, 1, 62, 20);
     ctx.fillStyle = '#069';
-    ctx.fillText('Wallable Security', 2, 15);
+    ctx.fillText('Wish Wall Security', 2, 15);
     ctx.fillStyle = 'rgba(102, 204, 0, 0.7)';
     ctx.fillText('Fingerprint Test', 4, 45);
     canvasFingerprint = canvas.toDataURL();

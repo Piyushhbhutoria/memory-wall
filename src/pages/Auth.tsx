@@ -136,7 +136,7 @@ const Auth = () => {
             <div className="mx-auto w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center mb-2">
               <span className="text-2xl font-bold text-white">W</span>
             </div>
-            <CardTitle className="text-3xl font-bold font-serif gradient-text">Wallable</CardTitle>
+            <CardTitle className="text-3xl font-bold font-serif gradient-text">Wish Wall</CardTitle>
             <CardDescription className="text-lg">Create and share digital wish walls</CardDescription>
           </CardHeader>
           <CardContent>
