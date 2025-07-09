@@ -1,0 +1,32 @@
+{
+  "name": "Wish Wall",
+  "short_name": "Wish Wall",
+  "description": "Create and share digital wish walls for any occasion",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#6366f1",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "orientation": "portrait-primary",
+  "categories": [
+    "social",
+    "productivity",
+    "lifestyle"
+  ]
+}

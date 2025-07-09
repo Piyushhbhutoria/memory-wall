@@ -1,7 +1,7 @@
 import { Footer } from '@/components/Footer';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
@@ -132,11 +132,14 @@ const Auth = () => {
 
       <div className="relative flex-1 flex items-center justify-center p-4">
         <Card className="w-full max-w-md card-elevated animate-scale-in">
-          <CardHeader className="text-center space-y-4">
-            <div className="mx-auto w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center mb-2">
-              <span className="text-2xl font-bold text-white">W</span>
+          <CardHeader className="text-center">
+            <div className="mx-auto w-32 h-32 flex items-center justify-center">
+              <img
+                src="/wishwall.svg"
+                alt="Wish Wall Logo"
+                className="w-full h-full object-contain"
+              />
             </div>
-            <CardTitle className="text-3xl font-bold font-serif gradient-text">Wish Wall</CardTitle>
             <CardDescription className="text-lg">Create and share digital wish walls</CardDescription>
           </CardHeader>
           <CardContent>
