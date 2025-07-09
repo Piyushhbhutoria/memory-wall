@@ -14,6 +14,88 @@ export type Database = {
   }
   public: {
     Tables: {
+      comments: {
+        Row: {
+          author_fingerprint: string | null
+          author_name: string | null
+          content: string
+          created_at: string
+          id: string
+          memory_id: string
+        }
+        Insert: {
+          author_fingerprint?: string | null
+          author_name?: string | null
+          content: string
+          created_at?: string
+          id?: string
+          memory_id: string
+        }
+        Update: {
+          author_fingerprint?: string | null
+          author_name?: string | null
+          content?: string
+          created_at?: string
+          id?: string
+          memory_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comments_memory_id_fkey"
+            columns: ["memory_id"]
+            isOneToOne: false
+            referencedRelation: "memories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      memories: {
+        Row: {
+          author_fingerprint: string | null
+          author_name: string | null
+          content: string | null
+          created_at: string
+          id: string
+          media_type: string | null
+          media_url: string | null
+          type: string
+          updated_at: string
+          wall_id: string
+        }
+        Insert: {
+          author_fingerprint?: string | null
+          author_name?: string | null
+          content?: string | null
+          created_at?: string
+          id?: string
+          media_type?: string | null
+          media_url?: string | null
+          type: string
+          updated_at?: string
+          wall_id: string
+        }
+        Update: {
+          author_fingerprint?: string | null
+          author_name?: string | null
+          content?: string | null
+          created_at?: string
+          id?: string
+          media_type?: string | null
+          media_url?: string | null
+          type?: string
+          updated_at?: string
+          wall_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "memories_wall_id_fkey"
+            columns: ["wall_id"]
+            isOneToOne: false
+            referencedRelation: "walls"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -38,6 +120,77 @@ export type Database = {
           id?: string
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      reactions: {
+        Row: {
+          author_fingerprint: string
+          created_at: string
+          emoji: string
+          id: string
+          memory_id: string
+        }
+        Insert: {
+          author_fingerprint: string
+          created_at?: string
+          emoji: string
+          id?: string
+          memory_id: string
+        }
+        Update: {
+          author_fingerprint?: string
+          created_at?: string
+          emoji?: string
+          id?: string
+          memory_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reactions_memory_id_fkey"
+            columns: ["memory_id"]
+            isOneToOne: false
+            referencedRelation: "memories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      walls: {
+        Row: {
+          cover_photo_url: string | null
+          created_at: string
+          expires_at: string
+          host_user_id: string | null
+          id: string
+          is_active: boolean | null
+          is_paid: boolean | null
+          max_memories: number | null
+          name: string
+          theme_color: string | null
+        }
+        Insert: {
+          cover_photo_url?: string | null
+          created_at?: string
+          expires_at?: string
+          host_user_id?: string | null
+          id?: string
+          is_active?: boolean | null
+          is_paid?: boolean | null
+          max_memories?: number | null
+          name: string
+          theme_color?: string | null
+        }
+        Update: {
+          cover_photo_url?: string | null
+          created_at?: string
+          expires_at?: string
+          host_user_id?: string | null
+          id?: string
+          is_active?: boolean | null
+          is_paid?: boolean | null
+          max_memories?: number | null
+          name?: string
+          theme_color?: string | null
         }
         Relationships: []
       }
