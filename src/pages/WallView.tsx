@@ -293,7 +293,16 @@ const WallView = () => {
 
       {/* Memories Grid */}
       <div className="flex-1">
-        <div className="max-w-7xl mx-auto px-4 py-8">
+        <div id="wall-export-content" className="max-w-7xl mx-auto px-4 py-8">
+          <div className="mb-6 text-center">
+            <h2 className="text-2xl font-bold mb-2" style={{ color: wall.theme_color }}>
+              {wall.name}
+            </h2>
+            <p className="text-muted-foreground">
+              {memories.length} {memories.length === 1 ? 'wish' : 'wishes'}
+            </p>
+          </div>
+          
           <WallGrid
             wallId={wallId!}
             memories={memories}

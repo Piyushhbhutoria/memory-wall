@@ -1,4 +1,5 @@
 import { ChangeThemeDialog } from '@/components/ChangeThemeDialog';
+import { ExportDialog } from '@/components/ExportDialog';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,6 +22,7 @@ import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { Wall } from '@/types/database';
 import {
+  Download,
   Eye,
   EyeOff,
   MoreVertical,
@@ -47,6 +49,7 @@ export const WallManagement: React.FC<WallManagementProps> = ({
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [showToggleDialog, setShowToggleDialog] = useState(false);
   const [showThemeDialog, setShowThemeDialog] = useState(false);
+  const [showExportDialog, setShowExportDialog] = useState(false);
   const { toast } = useToast();
 
   const handleDeleteWall = async () => {
@@ -134,6 +137,10 @@ export const WallManagement: React.FC<WallManagementProps> = ({
             <Palette className="h-4 w-4" />
             <span className="ml-2">Change Theme</span>
           </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setShowExportDialog(true)}>
+            <Download className="h-4 w-4" />
+            <span className="ml-2">Export Wall</span>
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setShowToggleDialog(true)} disabled={isToggling}>
             {getShareStatusIcon()}
@@ -218,6 +225,14 @@ export const WallManagement: React.FC<WallManagementProps> = ({
         onOpenChange={setShowThemeDialog}
         wall={wall}
         onThemeChanged={onWallUpdated}
+      />
+
+      {/* Export Dialog */}
+      <ExportDialog
+        isOpen={showExportDialog}
+        onOpenChange={setShowExportDialog}
+        wall={wall}
+        exportElementId="wall-export-content"
       />
     </>
   );
