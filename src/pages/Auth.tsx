@@ -112,29 +112,37 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
-      <div className="absolute top-4 right-4">
+    <div className="min-h-screen flex flex-col">
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-background" />
+      <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-float" />
+      <div className="absolute bottom-1/4 right-1/3 w-80 h-80 bg-accent/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
+      
+      <div className="absolute top-4 right-4 z-10">
         <ThemeToggle />
       </div>
       
-      <div className="flex-1 flex items-center justify-center p-4">
-        <Card className="w-full max-w-md">
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-bold">Wallable</CardTitle>
-            <CardDescription>Create and share digital memory walls</CardDescription>
+      <div className="relative flex-1 flex items-center justify-center p-4">
+        <Card className="w-full max-w-md card-elevated animate-scale-in">
+          <CardHeader className="text-center space-y-4">
+            <div className="mx-auto w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center mb-2">
+              <span className="text-2xl font-bold text-white">W</span>
+            </div>
+            <CardTitle className="text-3xl font-bold font-serif gradient-text">Wallable</CardTitle>
+            <CardDescription className="text-lg">Create and share digital memory walls</CardDescription>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="signin" className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="signin">Sign In</TabsTrigger>
-                <TabsTrigger value="signup">Sign Up</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-2 bg-muted/50">
+                <TabsTrigger value="signin" className="data-[state=active]:bg-gradient-primary data-[state=active]:text-white">Sign In</TabsTrigger>
+                <TabsTrigger value="signup" className="data-[state=active]:bg-gradient-primary data-[state=active]:text-white">Sign Up</TabsTrigger>
               </TabsList>
               
-              <TabsContent value="signin">
+              <TabsContent value="signin" className="space-y-6 mt-6">
                 <div className="space-y-4">
                   <Button 
                     variant="outline" 
-                    className="w-full" 
+                    className="w-full hover:bg-primary/5 hover:border-primary/30" 
                     onClick={handleGoogleSignIn}
                     disabled={isLoading}
                   >
@@ -147,7 +155,7 @@ const Auth = () => {
                       <Separator className="w-full" />
                     </div>
                     <div className="relative flex justify-center text-xs uppercase">
-                      <span className="bg-background px-2 text-muted-foreground">or</span>
+                      <span className="bg-card px-2 text-muted-foreground">or continue with email</span>
                     </div>
                   </div>
                   
@@ -161,6 +169,7 @@ const Auth = () => {
                         value={signInData.email}
                         onChange={(e) => setSignInData({ ...signInData, email: e.target.value })}
                         required
+                        className="h-11"
                       />
                     </div>
                     <div className="space-y-2">
@@ -171,20 +180,21 @@ const Auth = () => {
                         value={signInData.password}
                         onChange={(e) => setSignInData({ ...signInData, password: e.target.value })}
                         required
+                        className="h-11"
                       />
                     </div>
-                    <Button type="submit" className="w-full" disabled={isLoading}>
+                    <Button type="submit" variant="gradient" className="w-full" disabled={isLoading}>
                       {isLoading ? 'Signing in...' : 'Sign In'}
                     </Button>
                   </form>
                 </div>
               </TabsContent>
               
-              <TabsContent value="signup">
+              <TabsContent value="signup" className="space-y-6 mt-6">
                 <div className="space-y-4">
                   <Button 
                     variant="outline" 
-                    className="w-full" 
+                    className="w-full hover:bg-primary/5 hover:border-primary/30" 
                     onClick={handleGoogleSignIn}
                     disabled={isLoading}
                   >
@@ -197,7 +207,7 @@ const Auth = () => {
                       <Separator className="w-full" />
                     </div>
                     <div className="relative flex justify-center text-xs uppercase">
-                      <span className="bg-background px-2 text-muted-foreground">or</span>
+                      <span className="bg-card px-2 text-muted-foreground">or continue with email</span>
                     </div>
                   </div>
                   
@@ -210,6 +220,7 @@ const Auth = () => {
                         placeholder="Your name"
                         value={signUpData.displayName}
                         onChange={(e) => setSignUpData({ ...signUpData, displayName: e.target.value })}
+                        className="h-11"
                       />
                     </div>
                     <div className="space-y-2">
@@ -221,6 +232,7 @@ const Auth = () => {
                         value={signUpData.email}
                         onChange={(e) => setSignUpData({ ...signUpData, email: e.target.value })}
                         required
+                        className="h-11"
                       />
                     </div>
                     <div className="space-y-2">
@@ -231,6 +243,7 @@ const Auth = () => {
                         value={signUpData.password}
                         onChange={(e) => setSignUpData({ ...signUpData, password: e.target.value })}
                         required
+                        className="h-11"
                       />
                     </div>
                     <div className="space-y-2">
@@ -241,9 +254,10 @@ const Auth = () => {
                         value={signUpData.confirmPassword}
                         onChange={(e) => setSignUpData({ ...signUpData, confirmPassword: e.target.value })}
                         required
+                        className="h-11"
                       />
                     </div>
-                    <Button type="submit" className="w-full" disabled={isLoading}>
+                    <Button type="submit" variant="gradient" className="w-full" disabled={isLoading}>
                       {isLoading ? 'Creating account...' : 'Sign Up'}
                     </Button>
                   </form>
