@@ -1,29 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { WallGrid } from '@/components/WallGrid';
 import { AddMemoryModal } from '@/components/AddMemoryModal';
 import { ConfirmDialog } from '@/components/ConfirmDialog';
-import { supabase } from '@/integrations/supabase/client';
+import { Footer } from '@/components/Footer';
+import { ThemeToggle } from '@/components/theme-toggle';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { WallGrid } from '@/components/WallGrid';
+import { WallManagement } from '@/components/WallManagement';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
-import { Wall, Memory } from '@/types/database';
-import { 
-  Plus, 
-  Share2, 
-  QrCode, 
-  Calendar, 
-  Users, 
+import { supabase } from '@/integrations/supabase/client';
+import { Memory, Wall } from '@/types/database';
+import {
   ArrowLeft,
   Crown,
   Eye,
-  EyeOff
+  EyeOff,
+  Plus,
+  QrCode,
+  Share2,
+  Users
 } from 'lucide-react';
-import { ThemeToggle } from '@/components/theme-toggle';
-import { WallManagement } from '@/components/WallManagement';
-import { Footer } from '@/components/Footer';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const WallView = () => {
   const { wallId } = useParams<{ wallId: string }>();
@@ -41,9 +40,9 @@ const WallView = () => {
     isOpen: false,
     title: '',
     description: '',
-    action: () => {}
+    action: () => { }
   });
-  
+
   const { user } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -112,7 +111,7 @@ const WallView = () => {
     try {
       await navigator.share({
         title: wall?.name,
-        text: `Check out ${wall?.name} - a memory wall!`,
+        text: `Check out ${wall?.name} - a wish wall!`,
         url: wallUrl,
       });
     } catch (error) {
@@ -169,15 +168,15 @@ const WallView = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
-      <div 
+      <div
         className="border-b"
         style={{ backgroundColor: `${wall.theme_color}15` }}
       >
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Button 
-                variant="ghost" 
+              <Button
+                variant="ghost"
                 onClick={() => navigate('/')}
                 className="mb-4"
               >
@@ -185,7 +184,7 @@ const WallView = () => {
                 Back
               </Button>
             </div>
-            
+
             <ThemeToggle />
           </div>
 
@@ -206,10 +205,10 @@ const WallView = () => {
                   </Badge>
                 )}
               </div>
-              
+
               {isHost && (
-                <WallManagement 
-                  wall={wall} 
+                <WallManagement
+                  wall={wall}
                   onWallDeleted={handleWallDeleted}
                   onWallUpdated={handleWallUpdated}
                 />
@@ -219,9 +218,9 @@ const WallView = () => {
             <div className="flex items-center gap-3 text-sm text-muted-foreground">
               <div className="flex items-center gap-1">
                 <Users className="h-4 w-4" />
-                <span>{memoryCount} memories</span>
+                <span>{memoryCount} wishes</span>
               </div>
-              
+
               <div className="flex items-center gap-1">
                 {wall.is_active ? (
                   <>
@@ -247,24 +246,24 @@ const WallView = () => {
             )}
 
             <div className="flex flex-wrap gap-2">
-              <Button 
+              <Button
                 onClick={() => setIsAddModalOpen(true)}
                 style={{ backgroundColor: wall.theme_color }}
                 className="text-white hover:opacity-90"
               >
                 <Plus className="mr-2 h-4 w-4" />
-                Add Memory
+                Add Wish
               </Button>
-              
+
               {wall.is_active && (
                 <>
                   <Button variant="outline" onClick={handleShare}>
                     <Share2 className="mr-2 h-4 w-4" />
                     Share Wall
                   </Button>
-                  
-                  <Button 
-                    variant="outline" 
+
+                  <Button
+                    variant="outline"
                     onClick={() => setShowQR(!showQR)}
                   >
                     <QrCode className="mr-2 h-4 w-4" />
@@ -277,8 +276,8 @@ const WallView = () => {
             {showQR && wall.is_active && (
               <Card className="w-fit">
                 <CardContent className="p-4 text-center">
-                  <img 
-                    src={generateQRCode()} 
+                  <img
+                    src={generateQRCode()}
                     alt="QR Code"
                     className="mx-auto mb-2"
                   />
@@ -295,7 +294,7 @@ const WallView = () => {
       {/* Memories Grid */}
       <div className="flex-1">
         <div className="max-w-7xl mx-auto px-4 py-8">
-          <WallGrid 
+          <WallGrid
             wallId={wallId!}
             memories={memories}
             onMemoryUpdate={loadMemories}
@@ -327,7 +326,7 @@ const WallView = () => {
         variant="destructive"
         confirmText="Delete"
       />
-      
+
       <Footer />
     </div>
   );

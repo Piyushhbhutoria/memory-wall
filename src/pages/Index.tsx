@@ -1,25 +1,25 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Footer } from '@/components/Footer';
+import { ThemeToggle } from '@/components/theme-toggle';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { useAuth } from '@/contexts/AuthContext';
-import { ThemeToggle } from '@/components/theme-toggle';
-import { Footer } from '@/components/Footer';
 import { WallManagement } from '@/components/WallManagement';
+import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Wall } from '@/types/database';
-import { 
-  Plus, 
-  Users, 
-  Calendar, 
-  Heart,
-  Sparkles,
+import {
   ArrowRight,
-  Gift,
+  Calendar,
   Eye,
-  EyeOff
+  EyeOff,
+  Gift,
+  Heart,
+  Plus,
+  Sparkles,
+  Users
 } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
   const { user, signOut, loading } = useAuth();
@@ -35,7 +35,7 @@ const Index = () => {
 
   const loadUserWalls = async () => {
     if (!user) return;
-    
+
     setIsLoadingWalls(true);
     try {
       const { data, error } = await supabase
@@ -82,7 +82,7 @@ const Index = () => {
       <div className="absolute top-4 right-4 z-10">
         <ThemeToggle />
       </div>
-      
+
       {/* Main Content */}
       <div className="flex-1">
         {/* Hero Section */}
@@ -91,33 +91,33 @@ const Index = () => {
           <div className="absolute inset-0 bg-gradient-background" />
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-float" />
           <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-accent/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }} />
-          
+
           <div className="relative max-w-7xl mx-auto px-4 py-20 sm:py-32">
             <div className="text-center">
               <div className="flex items-center justify-center mb-8 animate-fade-in">
                 <div className="glass flex items-center gap-2 rounded-full px-6 py-3 border border-primary/20">
                   <Sparkles className="h-5 w-5 text-primary animate-pulse-glow" />
                   <span className="text-sm font-medium bg-gradient-primary bg-clip-text text-transparent">
-                    Digital Memory Walls
+                    Digital Wish Walls
                   </span>
                 </div>
               </div>
-              
+
               <h1 className="text-5xl sm:text-7xl font-bold tracking-tight mb-8 animate-fade-in" style={{ animationDelay: '0.1s' }}>
                 Create & Share
                 <span className="block gradient-text font-serif italic">
-                  Memory Walls
+                  Wish Walls
                 </span>
               </h1>
-              
+
               <p className="text-xl sm:text-2xl text-muted-foreground max-w-3xl mx-auto mb-10 leading-relaxed animate-fade-in" style={{ animationDelay: '0.2s' }}>
-                Give any group an instant, shared canvas to post messages, doodles, photos, and videos 
+                Give any group an instant, shared canvas to post messages, doodles, photos, and videos
                 for special occasions. <span className="text-primary font-semibold">Zero friction, maximum memories.</span>
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in" style={{ animationDelay: '0.3s' }}>
                 {user ? (
-                  <Button 
+                  <Button
                     onClick={() => navigate('/create')}
                     variant="gradient"
                     size="xl"
@@ -127,7 +127,7 @@ const Index = () => {
                     Create New Wall
                   </Button>
                 ) : (
-                  <Button 
+                  <Button
                     onClick={() => navigate('/auth')}
                     variant="gradient"
                     size="xl"
@@ -202,7 +202,7 @@ const Index = () => {
                   </CardHeader>
                   <CardContent className="text-center">
                     <CardDescription className="text-base leading-relaxed">
-                      Create unlimited memory walls and collect unlimited memories. Completely free, forever. No hidden costs.
+                      Create unlimited wish walls and collect unlimited wishes. Completely free, forever. No hidden costs.
                     </CardDescription>
                   </CardContent>
                 </Card>
@@ -217,7 +217,7 @@ const Index = () => {
             <div className="max-w-7xl mx-auto px-4">
               <div className="flex items-center justify-between mb-10 animate-fade-in">
                 <div>
-                  <h2 className="text-3xl font-bold font-serif">Your Memory Walls</h2>
+                  <h2 className="text-3xl font-bold font-serif">Your Wish Walls</h2>
                   <p className="text-muted-foreground text-lg mt-2">Manage and share your existing walls</p>
                 </div>
                 <Button onClick={() => navigate('/create')} variant="gradient" size="lg" className="group">
@@ -241,7 +241,7 @@ const Index = () => {
                     </div>
                     <h3 className="text-2xl font-semibold font-serif mb-3">No walls yet</h3>
                     <p className="text-muted-foreground text-lg mb-6 max-w-md mx-auto">
-                      Create your first memory wall to start collecting beautiful moments
+                      Create your first wish wall to start collecting beautiful moments
                     </p>
                     <Button onClick={() => navigate('/create')} variant="gradient" size="lg">
                       Create Your First Wall
@@ -251,8 +251,8 @@ const Index = () => {
               ) : (
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {userWalls.map((wall, index) => (
-                    <Card 
-                      key={wall.id} 
+                    <Card
+                      key={wall.id}
                       className="card-elevated group animate-fade-in relative"
                       style={{ animationDelay: `${index * 0.1}s` }}
                     >
@@ -262,7 +262,7 @@ const Index = () => {
                             <CardTitle className="text-xl font-serif group-hover:text-primary transition-colors">
                               {wall.name}
                             </CardTitle>
-                            <div 
+                            <div
                               className="w-5 h-5 rounded-full border-2 border-white shadow-md group-hover:scale-110 transition-transform"
                               style={{ backgroundColor: wall.theme_color }}
                             />
@@ -273,8 +273,8 @@ const Index = () => {
                               </Badge>
                             )}
                           </div>
-                          <WallManagement 
-                            wall={wall} 
+                          <WallManagement
+                            wall={wall}
                             onWallDeleted={handleWallDeleted}
                             onWallUpdated={handleWallUpdated}
                           />

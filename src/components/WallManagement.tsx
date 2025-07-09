@@ -1,13 +1,5 @@
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { 
-  DropdownMenu, 
-  DropdownMenuContent, 
-  DropdownMenuItem, 
-  DropdownMenuTrigger, 
-  DropdownMenuSeparator 
-} from '@/components/ui/dropdown-menu';
-import { 
+import { ChangeThemeDialog } from '@/components/ChangeThemeDialog';
+import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -17,19 +9,27 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { Wall } from '@/types/database';
-import { ChangeThemeDialog } from '@/components/ChangeThemeDialog';
-import { 
-  MoreVertical, 
-  Trash2, 
-  Share2, 
-  Shield, 
-  Eye, 
+import {
+  Eye,
   EyeOff,
-  Palette
+  MoreVertical,
+  Palette,
+  Share2,
+  Shield,
+  Trash2
 } from 'lucide-react';
+import React, { useState } from 'react';
 
 interface WallManagementProps {
   wall: Wall;
@@ -37,10 +37,10 @@ interface WallManagementProps {
   onWallDeleted?: () => void;
 }
 
-export const WallManagement: React.FC<WallManagementProps> = ({ 
-  wall, 
-  onWallUpdated, 
-  onWallDeleted 
+export const WallManagement: React.FC<WallManagementProps> = ({
+  wall,
+  onWallUpdated,
+  onWallDeleted
 }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isToggling, setIsToggling] = useState(false);
@@ -61,7 +61,7 @@ export const WallManagement: React.FC<WallManagementProps> = ({
 
       toast({
         title: "Wall deleted",
-        description: "Your memory wall has been permanently deleted.",
+        description: "Your wish wall has been permanently deleted.",
       });
 
       onWallDeleted?.();
@@ -90,7 +90,7 @@ export const WallManagement: React.FC<WallManagementProps> = ({
 
       toast({
         title: wall.is_active ? "Sharing stopped" : "Sharing resumed",
-        description: wall.is_active 
+        description: wall.is_active
           ? "Your wall is now private and cannot be accessed by others."
           : "Your wall is now public and can be accessed via the share link.",
       });
@@ -140,8 +140,8 @@ export const WallManagement: React.FC<WallManagementProps> = ({
             <span className="ml-2">{getShareStatusText()}</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem 
-            onClick={() => setShowDeleteDialog(true)} 
+          <DropdownMenuItem
+            onClick={() => setShowDeleteDialog(true)}
             disabled={isDeleting}
             className="text-destructive focus:text-destructive"
           >
@@ -162,12 +162,12 @@ export const WallManagement: React.FC<WallManagementProps> = ({
             <AlertDialogDescription>
               {wall.is_active ? (
                 <>
-                  This will make your wall private and revoke access for anyone with the share link. 
+                  This will make your wall private and revoke access for anyone with the share link.
                   Contributors will no longer be able to view or add memories to this wall.
                 </>
               ) : (
                 <>
-                  This will make your wall public again. Anyone with the share link will be able to 
+                  This will make your wall public again. Anyone with the share link will be able to
                   view and add memories to this wall.
                 </>
               )}
@@ -195,7 +195,7 @@ export const WallManagement: React.FC<WallManagementProps> = ({
               Delete "{wall.name}"?
             </AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete your memory wall and 
+              This action cannot be undone. This will permanently delete your wish wall and
               all associated memories, comments, and reactions. All contributors will lose access immediately.
             </AlertDialogDescription>
           </AlertDialogHeader>

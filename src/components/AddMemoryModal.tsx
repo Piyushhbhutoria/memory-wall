@@ -1,16 +1,16 @@
-import React, { useState, useRef } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Card } from '@/components/ui/card';
-import { Upload, Type, Palette, Camera } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
-import { useFingerprint } from '@/hooks/useFingerprint';
+import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import { memoryContentSchema, validateFile, rateLimiter } from '@/lib/security';
+import { useFingerprint } from '@/hooks/useFingerprint';
+import { supabase } from '@/integrations/supabase/client';
+import { memoryContentSchema, rateLimiter, validateFile } from '@/lib/security';
+import { Camera, Palette, Type, Upload } from 'lucide-react';
+import React, { useRef, useState } from 'react';
 
 interface AddMemoryModalProps {
   isOpen: boolean;
@@ -33,7 +33,7 @@ export const AddMemoryModal: React.FC<AddMemoryModalProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
-  
+
   const fingerprint = useFingerprint();
   const { toast } = useToast();
 
@@ -86,14 +86,14 @@ export const AddMemoryModal: React.FC<AddMemoryModalProps> = ({
 
   const saveSketch = async (): Promise<string | null> => {
     if (!canvasRef.current) return null;
-    
+
     return new Promise((resolve) => {
       canvasRef.current!.toBlob(async (blob) => {
         if (!blob) {
           resolve(null);
           return;
         }
-        
+
         try {
           const file = new File([blob], 'sketch.png', { type: 'image/png' });
           const url = await uploadFile(file);
@@ -110,7 +110,7 @@ export const AddMemoryModal: React.FC<AddMemoryModalProps> = ({
     if (!rateLimiter.isAllowed(fingerprint || 'anonymous')) {
       toast({
         title: "Too many requests",
-        description: "Please wait before adding another memory",
+        description: "Please wait before adding another wish",
         variant: "destructive"
       });
       return;
@@ -123,7 +123,7 @@ export const AddMemoryModal: React.FC<AddMemoryModalProps> = ({
         authorName: authorName.trim(),
         type: activeTab as 'text' | 'image' | 'video' | 'sketch'
       };
-      
+
       memoryContentSchema.parse(validationData);
     } catch (error: any) {
       toast({
@@ -157,8 +157,8 @@ export const AddMemoryModal: React.FC<AddMemoryModalProps> = ({
         memoryData.content = textContent.trim();
       } else if (activeTab === 'upload' && uploadedFile) {
         const mediaUrl = await uploadFile(uploadedFile);
-        memoryData.type = uploadedFile.type.startsWith('video/') ? 'video' : 
-                          uploadedFile.type === 'image/gif' ? 'gif' : 'image';
+        memoryData.type = uploadedFile.type.startsWith('video/') ? 'video' :
+          uploadedFile.type === 'image/gif' ? 'gif' : 'image';
         memoryData.media_url = mediaUrl;
         memoryData.media_type = uploadedFile.type;
         if (textContent.trim()) {
@@ -189,8 +189,8 @@ export const AddMemoryModal: React.FC<AddMemoryModalProps> = ({
       if (error) throw error;
 
       toast({
-        title: "Memory added!",
-        description: "Your memory has been shared on the wall.",
+        title: "Wish added!",
+        description: "Your wish has been shared on the wall.",
       });
 
       resetForm();
@@ -198,7 +198,7 @@ export const AddMemoryModal: React.FC<AddMemoryModalProps> = ({
       onClose();
     } catch (error: any) {
       toast({
-        title: "Failed to add memory",
+        title: "Failed to add wish",
         description: error.message,
         variant: "destructive",
       });
@@ -212,25 +212,25 @@ export const AddMemoryModal: React.FC<AddMemoryModalProps> = ({
     setIsDrawing(true);
     const canvas = canvasRef.current;
     if (!canvas) return;
-    
+
     const rect = canvas.getBoundingClientRect();
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-    
+
     ctx.beginPath();
     ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
   };
 
   const draw = (e: React.MouseEvent<HTMLCanvasElement>) => {
     if (!isDrawing) return;
-    
+
     const canvas = canvasRef.current;
     if (!canvas) return;
-    
+
     const rect = canvas.getBoundingClientRect();
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-    
+
     ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
     ctx.stroke();
   };
@@ -255,7 +255,7 @@ export const AddMemoryModal: React.FC<AddMemoryModalProps> = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-auto">
         <DialogHeader>
-          <DialogTitle>Share a Memory</DialogTitle>
+          <DialogTitle>Share a Wish</DialogTitle>
         </DialogHeader>
 
         <div className="space-y-4">
@@ -393,7 +393,7 @@ export const AddMemoryModal: React.FC<AddMemoryModalProps> = ({
               Cancel
             </Button>
             <Button onClick={handleSubmit} disabled={isLoading} className="flex-1">
-              {isLoading ? 'Sharing...' : 'Share Memory'}
+              {isLoading ? 'Sharing...' : 'Share Wish'}
             </Button>
           </div>
         </div>

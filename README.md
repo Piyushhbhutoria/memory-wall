@@ -1,8 +1,10 @@
-# Welcome to your Lovable project
+# Wish Wall
+
+A beautiful digital wall where friends and family can share wishes, photos, and memories for any occasion.
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/f99c1c8b-2141-4c29-afc6-6e3868c50807
+**URL**: <https://lovable.dev/projects/f99c1c8b-2141-4c29-afc6-6e3868c50807>
 
 ## How can I edit this code?
 

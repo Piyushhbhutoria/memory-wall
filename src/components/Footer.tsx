@@ -7,7 +7,7 @@ export const Footer: React.FC = () => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-center md:text-left">
             <p className="text-sm text-muted-foreground">
-              © 2024 Wallable. Create and share memory walls for any occasion.
+              © 2024 Wallable. Create and share wish walls for any occasion.
             </p>
           </div>
           <div className="flex items-center gap-4 text-sm text-muted-foreground">

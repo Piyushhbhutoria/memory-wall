@@ -66,7 +66,7 @@ const CreateWall = () => {
 
       toast({
         title: "Wall created!",
-        description: "Your memory wall is ready to share.",
+        description: "Your wish wall is ready to share.",
       });
 
       navigate(`/wall/${data.id}`);
@@ -96,9 +96,9 @@ const CreateWall = () => {
 
           <Card>
             <CardHeader>
-              <CardTitle className="text-2xl">Create a Memory Wall</CardTitle>
+              <CardTitle className="text-2xl">Create a Wish Wall</CardTitle>
               <CardDescription>
-                Set up your digital memory wall for friends and family to share special moments
+                Set up your digital wish wall for friends and family to share special moments
               </CardDescription>
             </CardHeader>
             <CardContent>
