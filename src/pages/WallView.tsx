@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { WallGrid } from '@/components/WallGrid';
 import { AddMemoryModal } from '@/components/AddMemoryModal';
+import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
@@ -27,6 +28,17 @@ const WallView = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [showQR, setShowQR] = useState(false);
+  const [confirmDialog, setConfirmDialog] = useState<{
+    isOpen: boolean;
+    title: string;
+    description: string;
+    action: () => void;
+  }>({
+    isOpen: false,
+    title: '',
+    description: '',
+    action: () => {}
+  });
   
   const { user } = useAuth();
   const { toast } = useToast();
@@ -279,6 +291,20 @@ const WallView = () => {
           loadMemories();
           setIsAddModalOpen(false);
         }}
+      />
+
+      {/* Confirmation Dialog */}
+      <ConfirmDialog
+        isOpen={confirmDialog.isOpen}
+        onClose={() => setConfirmDialog(prev => ({ ...prev, isOpen: false }))}
+        onConfirm={() => {
+          confirmDialog.action();
+          setConfirmDialog(prev => ({ ...prev, isOpen: false }));
+        }}
+        title={confirmDialog.title}
+        description={confirmDialog.description}
+        variant="destructive"
+        confirmText="Delete"
       />
     </div>
   );
