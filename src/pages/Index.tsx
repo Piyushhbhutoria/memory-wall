@@ -96,7 +96,11 @@ const Index = () => {
             <div className="text-center">
               <div className="flex items-center justify-center mb-8 animate-fade-in">
                 <div className="glass flex items-center gap-2 rounded-full px-6 py-3 border border-primary/20">
-                  <Sparkles className="h-5 w-5 text-primary animate-pulse-glow" />
+                  <img
+                    src="/wishwall.svg"
+                    alt="Wish Wall Logo"
+                    className="w-6 h-6 object-contain dark:invert"
+                  />
                   <span className="text-sm font-medium bg-gradient-primary bg-clip-text text-transparent">
                     Digital Wish Walls
                   </span>
