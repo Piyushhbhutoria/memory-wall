@@ -19,7 +19,7 @@ export const Footer: React.FC = () => {
             </p>
           </div>
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
-            <span>Made with ❤️ for memorable moments by <a href="https://www.linkedin.com/in/piyushh-bhutoria/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Piyushh</a></span>
+            <span>Made with ❤️ for memorable moments by <a href="https://piyushhbhutoria.github.io/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Piyushh</a></span>
           </div>
         </div>
       </div>
