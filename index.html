@@ -12,13 +12,22 @@
     <meta http-equiv="X-XSS-Protection" content="1; mode=block">
     <meta name="referrer" content="strict-origin-when-cross-origin">
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GMZBD0VN6W"></script>
+    <!-- Google Analytics - Optimized loading -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
-      gtag('js', new Date());
-      gtag('config', 'G-GMZBD0VN6W');
+      // Defer Google Analytics loading
+      window.addEventListener('load', function() {
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-GMZBD0VN6W';
+        document.head.appendChild(script);
+        
+        script.onload = function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { dataLayer.push(arguments); }
+          gtag('js', new Date());
+          gtag('config', 'G-GMZBD0VN6W');
+        };
+      });
     </script>
 
     <!-- Favicon -->

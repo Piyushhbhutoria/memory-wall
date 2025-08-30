@@ -1,5 +1,4 @@
-import { AddMemoryModal } from '@/components/AddMemoryModal';
-import { ConfirmDialog } from '@/components/ConfirmDialog';
+import { Suspense, lazy } from 'react';
 import { Footer } from '@/components/Footer';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Badge } from '@/components/ui/badge';
@@ -11,6 +10,11 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { Memory, Wall } from '@/types/database';
+
+// Lazy load heavy modal components
+const AddMemoryModal = lazy(() => import('@/components/AddMemoryModal').then(m => ({ default: m.AddMemoryModal })));
+const ConfirmDialog = lazy(() => import('@/components/ConfirmDialog').then(m => ({ default: m.ConfirmDialog })));
+
 import {
   ArrowLeft,
   Crown,
@@ -312,29 +316,33 @@ const WallView = () => {
       </div>
 
       {/* Add Memory Modal */}
-      <AddMemoryModal
-        isOpen={isAddModalOpen}
-        onClose={() => setIsAddModalOpen(false)}
-        wallId={wallId!}
-        onMemoryAdded={() => {
-          loadMemories();
-          setIsAddModalOpen(false);
-        }}
-      />
+      <Suspense fallback={<div />}>
+        <AddMemoryModal
+          isOpen={isAddModalOpen}
+          onClose={() => setIsAddModalOpen(false)}
+          wallId={wallId!}
+          onMemoryAdded={() => {
+            loadMemories();
+            setIsAddModalOpen(false);
+          }}
+        />
+      </Suspense>
 
       {/* Confirmation Dialog */}
-      <ConfirmDialog
-        isOpen={confirmDialog.isOpen}
-        onClose={() => setConfirmDialog(prev => ({ ...prev, isOpen: false }))}
-        onConfirm={() => {
-          confirmDialog.action();
-          setConfirmDialog(prev => ({ ...prev, isOpen: false }));
-        }}
-        title={confirmDialog.title}
-        description={confirmDialog.description}
-        variant="destructive"
-        confirmText="Delete"
-      />
+      <Suspense fallback={<div />}>
+        <ConfirmDialog
+          isOpen={confirmDialog.isOpen}
+          onClose={() => setConfirmDialog(prev => ({ ...prev, isOpen: false }))}
+          onConfirm={() => {
+            confirmDialog.action();
+            setConfirmDialog(prev => ({ ...prev, isOpen: false }));
+          }}
+          title={confirmDialog.title}
+          description={confirmDialog.description}
+          variant="destructive"
+          confirmText="Delete"
+        />
+      </Suspense>
 
       <Footer />
     </div>

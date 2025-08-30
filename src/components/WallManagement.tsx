@@ -1,5 +1,4 @@
-import { ChangeThemeDialog } from '@/components/ChangeThemeDialog';
-import { ExportDialog } from '@/components/ExportDialog';
+import { Suspense, lazy } from 'react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,6 +20,11 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { Wall } from '@/types/database';
+
+// Lazy load heavy modal components
+const ChangeThemeDialog = lazy(() => import('@/components/ChangeThemeDialog').then(m => ({ default: m.ChangeThemeDialog })));
+const ExportDialog = lazy(() => import('@/components/ExportDialog').then(m => ({ default: m.ExportDialog })));
+
 import {
   Download,
   Eye,
@@ -220,20 +224,24 @@ export const WallManagement: React.FC<WallManagementProps> = ({
       </AlertDialog>
 
       {/* Change Theme Dialog */}
-      <ChangeThemeDialog
-        isOpen={showThemeDialog}
-        onOpenChange={setShowThemeDialog}
-        wall={wall}
-        onThemeChanged={onWallUpdated}
-      />
+      <Suspense fallback={<div />}>
+        <ChangeThemeDialog
+          isOpen={showThemeDialog}
+          onOpenChange={setShowThemeDialog}
+          wall={wall}
+          onThemeChanged={onWallUpdated}
+        />
+      </Suspense>
 
       {/* Export Dialog */}
-      <ExportDialog
-        isOpen={showExportDialog}
-        onOpenChange={setShowExportDialog}
-        wall={wall}
-        exportElementId="wall-export-content"
-      />
+      <Suspense fallback={<div />}>
+        <ExportDialog
+          isOpen={showExportDialog}
+          onOpenChange={setShowExportDialog}
+          wall={wall}
+          exportElementId="wall-export-content"
+        />
+      </Suspense>
     </>
   );
 };
