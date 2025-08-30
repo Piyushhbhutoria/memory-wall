@@ -1,0 +1,52 @@
+# Apache cache configuration for static assets
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # JavaScript and CSS files with hashes (1 year)
+    <FilesMatch "\.(js|css)$">
+        ExpiresDefault "access plus 1 year"
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+    
+    # Images (1 week for root level, 1 year for assets)
+    <FilesMatch "\.(png|jpg|jpeg|gif|webp|ico)$">
+        ExpiresDefault "access plus 1 week"
+        Header set Cache-Control "public, max-age=604800"
+    </FilesMatch>
+    
+    # SVG files
+    <FilesMatch "\.svg$">
+        ExpiresDefault "access plus 1 week"
+        Header set Cache-Control "public, max-age=604800"
+    </FilesMatch>
+    
+    # Fonts
+    <FilesMatch "\.(woff|woff2)$">
+        ExpiresDefault "access plus 1 year"
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+    
+    # JSON files
+    <FilesMatch "\.json$">
+        ExpiresDefault "access plus 1 week"
+        Header set Cache-Control "public, max-age=604800"
+    </FilesMatch>
+    
+    # HTML files - no cache
+    <FilesMatch "\.html$">
+        ExpiresDefault "access plus 0 seconds"
+        Header set Cache-Control "public, max-age=0, must-revalidate"
+    </FilesMatch>
+</IfModule>
+
+# Special handling for hashed assets in assets folder
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Assets with hashes get long cache
+    RewriteCond %{REQUEST_URI} ^/assets/.*\.(js|css|png|jpg|jpeg|gif|webp|svg|woff|woff2)$
+    RewriteRule .* - [E=CACHE_TIME:31536000]
+    
+    Header always set Cache-Control "public, max-age=%{CACHE_TIME}e, immutable" env=CACHE_TIME
+</IfModule>

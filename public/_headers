@@ -1,0 +1,53 @@
+# Cache headers for static assets
+
+# JavaScript and CSS files with hashes (immutable)
+/assets/*.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*.css
+  Cache-Control: public, max-age=31536000, immutable
+
+# Images and fonts
+/assets/*.png
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*.jpeg
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*.gif
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*.svg
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*.woff
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+
+# Root level static assets
+/*.svg
+  Cache-Control: public, max-age=604800
+
+/*.png
+  Cache-Control: public, max-age=604800
+
+/*.ico
+  Cache-Control: public, max-age=604800
+
+/*.json
+  Cache-Control: public, max-age=604800
+
+# HTML files - shorter cache with revalidation
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/
+  Cache-Control: public, max-age=0, must-revalidate
