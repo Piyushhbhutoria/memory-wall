@@ -5,6 +5,92 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
+    <!-- Critical CSS Inline - Above the fold styles -->
+    <style>
+      /* Critical above-the-fold styles to prevent layout shift */
+      :root {
+        --background: 0 0% 100%;
+        --foreground: 224 71% 4%;
+        --primary: 262 83% 58%;
+        --primary-foreground: 210 20% 98%;
+        --radius: 0.75rem;
+        --border: 220 13% 91%;
+        --card: 0 0% 100%;
+        --card-foreground: 224 71% 4%;
+      }
+      
+      [class*="dark"] {
+        --background: 224 71% 4%;
+        --foreground: 210 20% 98%;
+        --border: 215 27% 16%;
+        --card: 224 71% 4%;
+        --card-foreground: 210 20% 98%;
+      }
+      
+      * {
+        border-color: hsl(var(--border));
+      }
+      
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      
+      body {
+        background-color: hsl(var(--background));
+        color: hsl(var(--foreground));
+        font-feature-settings: "rlig" 1, "calt" 1;
+        margin: 0;
+        padding: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      
+      #root {
+        min-height: 100vh;
+      }
+      
+      /* Critical loading state */
+      .loading-fallback {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        font-size: 1.125rem;
+        background: linear-gradient(180deg, hsl(var(--background)), hsl(220 14% 98%));
+      }
+      
+      /* Critical button styles to prevent layout shift */
+      .btn-critical {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: calc(var(--radius) - 2px);
+        font-size: 0.875rem;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        transition: all 0.15s ease-in-out;
+        border: 1px solid hsl(var(--border));
+        background-color: hsl(var(--card));
+        color: hsl(var(--card-foreground));
+        cursor: pointer;
+      }
+      
+      .btn-critical:hover {
+        background-color: hsl(var(--primary));
+        color: hsl(var(--primary-foreground));
+      }
+    </style>
+    
+    <!-- Preload Google Fonts with font-display: swap -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap"></noscript>
+    
     <!-- Resource Hints for Performance -->
     <link rel="preconnect" href="https://uktpbcpzzxbbsoixiioq.supabase.co" crossorigin>
     <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
@@ -63,7 +149,42 @@
   </head>
 
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Critical loading fallback to prevent layout shift -->
+      <div class="loading-fallback">Loading...</div>
+    </div>
+    
+    <!-- Defer CSS loading to prevent render blocking -->
+    <script>
+      // Load CSS asynchronously after critical render
+      const loadCSS = function(href) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = href;
+        link.media = 'print';
+        link.onload = function() { this.media = 'all'; };
+        document.head.appendChild(link);
+      };
+      
+      // Wait for Vite to inject the CSS href, then load it asynchronously
+      window.addEventListener('DOMContentLoaded', function() {
+        // Find the CSS link that Vite will inject
+        const stylesheets = document.querySelectorAll('link[rel="stylesheet"]');
+        stylesheets.forEach(function(stylesheet) {
+          if (stylesheet.href.includes('/assets/index-') && stylesheet.href.endsWith('.css')) {
+            // Remove the render-blocking stylesheet
+            const href = stylesheet.href;
+            stylesheet.remove();
+            
+            // Load it asynchronously
+            setTimeout(function() {
+              loadCSS(href);
+            }, 0);
+          }
+        });
+      });
+    </script>
+    
     <!-- Optimized module loading -->
     <script type="module" src="/src/main.tsx"></script>
     
