@@ -4,6 +4,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://uktpbcpzzxbbsoixiioq.supabase.co" crossorigin>
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+    <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
+    <link rel="dns-prefetch" href="https://analytics.google.com">
+    
     <!-- Security Headers -->
     <meta http-equiv="Content-Security-Policy"
       content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https: https://www.google-analytics.com; font-src 'self' data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com https://analytics.google.com; media-src 'self' blob: https:; object-src 'none'; base-uri 'self'; form-action 'self';">
@@ -30,8 +37,9 @@
       });
     </script>
 
-    <!-- Favicon -->
+    <!-- Favicon with preload for critical icons -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="preload" as="image" href="/icon-192x192.png" type="image/png">
     <link rel="icon" type="image/png" sizes="32x32" href="/icon-192x192.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="/icon-192x192.png" />
     <link rel="apple-touch-icon" sizes="512x512" href="/icon-512x512.png" />
@@ -56,7 +64,20 @@
 
   <body>
     <div id="root"></div>
+    <!-- Optimized module loading -->
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Preload critical resources hint for future optimization -->
+    <script>
+      // Preload critical Supabase connection early
+      if ('serviceWorker' in navigator) {
+        // Only preload if service worker is supported (modern browsers)
+        const link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.href = 'https://uktpbcpzzxbbsoixiioq.supabase.co/rest/v1/';
+        document.head.appendChild(link);
+      }
+    </script>
   </body>
 
 </html>
