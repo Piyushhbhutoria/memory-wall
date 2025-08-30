@@ -48,6 +48,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const signUp = async (email: string, password: string, displayName?: string) => {
+    // Import password validation
+    const { passwordSchema } = await import('@/lib/security');
+    
+    // Validate password strength
+    const passwordValidation = passwordSchema.safeParse(password);
+    if (!passwordValidation.success) {
+      return { error: { message: passwordValidation.error.errors[0].message } };
+    }
+    
     const redirectUrl = `${window.location.origin}/`;
     
     const { error } = await supabase.auth.signUp({
@@ -62,10 +71,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signIn = async (email: string, password: string) => {
+    const { logSecurityEvent } = await import('@/lib/security');
+    
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
+    
+    // Log failed sign-in attempts for security monitoring
+    if (error) {
+      await logSecurityEvent('failed_signin_attempt', `Failed sign-in attempt for email: ${email}`, undefined, {
+        error_code: error.message,
+        timestamp: new Date().toISOString()
+      });
+    }
+    
     return { error };
   };
 

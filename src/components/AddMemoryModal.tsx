@@ -107,7 +107,7 @@ export const AddMemoryModal: React.FC<AddMemoryModalProps> = ({
 
   const handleSubmit = async () => {
     // Rate limiting check
-    if (!rateLimiter.isAllowed(fingerprint || 'anonymous')) {
+    if (!rateLimiter.isAllowed(fingerprint || 'anonymous', 'memory_creation')) {
       toast({
         title: "Too many requests",
         description: "Please wait before adding another wish",

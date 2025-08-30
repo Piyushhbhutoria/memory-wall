@@ -58,7 +58,7 @@ export const MemoryCard: React.FC<MemoryCardProps> = ({
     if (!fingerprint) return;
 
     // Rate limiting check
-    if (!rateLimiter.isAllowed(fingerprint)) {
+    if (!rateLimiter.isAllowed(fingerprint, 'reaction')) {
       toast({
         title: "Too many requests",
         description: "Please wait before reacting again",
