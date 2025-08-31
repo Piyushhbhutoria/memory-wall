@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -58,9 +59,25 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        flex-direction: column;
         min-height: 100vh;
         font-size: 1.125rem;
         background: linear-gradient(180deg, hsl(var(--background)), hsl(220 14% 98%));
+        gap: 1rem;
+      }
+      
+      .loading-spinner {
+        width: 2rem;
+        height: 2rem;
+        border: 2px solid hsl(var(--border));
+        border-top: 2px solid hsl(var(--primary));
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
       }
       
       /* Critical button styles to prevent layout shift */
@@ -85,17 +102,17 @@
       }
     </style>
     
-    <!-- Preload Google Fonts with font-display: swap -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap"></noscript>
-    
     <!-- Resource Hints for Performance -->
     <link rel="preconnect" href="https://uktpbcpzzxbbsoixiioq.supabase.co" crossorigin>
     <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
     <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
     <link rel="dns-prefetch" href="https://analytics.google.com">
+    
+    <!-- Load Google Fonts with font-display: swap for faster rendering -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap"></noscript>
     
     <!-- Security Headers -->
     <meta http-equiv="Content-Security-Policy"
@@ -150,24 +167,27 @@
 
   <body>
     <div id="root">
-      <!-- Critical loading fallback to prevent layout shift -->
-      <div class="loading-fallback">Loading...</div>
+      <!-- Enhanced loading fallback -->
+      <div class="loading-fallback">
+        <div class="loading-spinner"></div>
+        <div>Loading Wish Wall...</div>
+      </div>
     </div>
-    
     
     <!-- Optimized module loading -->
     <script type="module" src="/src/main.tsx"></script>
     
-    <!-- Preload critical resources hint for future optimization -->
+    <!-- Debug script to monitor loading -->
     <script>
-      // Preload critical Supabase connection early
-      if ('serviceWorker' in navigator) {
-        // Only preload if service worker is supported (modern browsers)
-        const link = document.createElement('link');
-        link.rel = 'prefetch';
-        link.href = 'https://uktpbcpzzxbbsoixiioq.supabase.co/rest/v1/';
-        document.head.appendChild(link);
-      }
+      console.log('HTML: Page loaded, starting React app...');
+      
+      // Monitor for stuck loading states
+      setTimeout(function() {
+        const fallback = document.querySelector('.loading-fallback');
+        if (fallback && fallback.style.display !== 'none') {
+          console.warn('HTML: Loading seems stuck after 10 seconds');
+        }
+      }, 10000);
     </script>
   </body>
 
