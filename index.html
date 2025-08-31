@@ -154,36 +154,6 @@
       <div class="loading-fallback">Loading...</div>
     </div>
     
-    <!-- Defer CSS loading to prevent render blocking -->
-    <script>
-      // Load CSS asynchronously after critical render
-      const loadCSS = function(href) {
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = href;
-        link.media = 'print';
-        link.onload = function() { this.media = 'all'; };
-        document.head.appendChild(link);
-      };
-      
-      // Wait for Vite to inject the CSS href, then load it asynchronously
-      window.addEventListener('DOMContentLoaded', function() {
-        // Find the CSS link that Vite will inject
-        const stylesheets = document.querySelectorAll('link[rel="stylesheet"]');
-        stylesheets.forEach(function(stylesheet) {
-          if (stylesheet.href.includes('/assets/index-') && stylesheet.href.endsWith('.css')) {
-            // Remove the render-blocking stylesheet
-            const href = stylesheet.href;
-            stylesheet.remove();
-            
-            // Load it asynchronously
-            setTimeout(function() {
-              loadCSS(href);
-            }, 0);
-          }
-        });
-      });
-    </script>
     
     <!-- Optimized module loading -->
     <script type="module" src="/src/main.tsx"></script>
