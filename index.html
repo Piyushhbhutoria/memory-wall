@@ -1,119 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- Critical CSS Inline - Above the fold styles -->
-    <style>
-      /* Critical above-the-fold styles to prevent layout shift */
-      :root {
-        --background: 0 0% 100%;
-        --foreground: 224 71% 4%;
-        --primary: 262 83% 58%;
-        --primary-foreground: 210 20% 98%;
-        --radius: 0.75rem;
-        --border: 220 13% 91%;
-        --card: 0 0% 100%;
-        --card-foreground: 224 71% 4%;
-      }
-      
-      [class*="dark"] {
-        --background: 224 71% 4%;
-        --foreground: 210 20% 98%;
-        --border: 215 27% 16%;
-        --card: 224 71% 4%;
-        --card-foreground: 210 20% 98%;
-      }
-      
-      * {
-        border-color: hsl(var(--border));
-      }
-      
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-      }
-      
-      body {
-        background-color: hsl(var(--background));
-        color: hsl(var(--foreground));
-        font-feature-settings: "rlig" 1, "calt" 1;
-        margin: 0;
-        padding: 0;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        line-height: 1.5;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-      
-      #root {
-        min-height: 100vh;
-      }
-      
-      /* Critical loading state */
-      .loading-fallback {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        min-height: 100vh;
-        font-size: 1.125rem;
-        background: linear-gradient(180deg, hsl(var(--background)), hsl(220 14% 98%));
-        gap: 1rem;
-      }
-      
-      .loading-spinner {
-        width: 2rem;
-        height: 2rem;
-        border: 2px solid hsl(var(--border));
-        border-top: 2px solid hsl(var(--primary));
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-      }
-      
-      @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
-      
-      /* Critical button styles to prevent layout shift */
-      .btn-critical {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: calc(var(--radius) - 2px);
-        font-size: 0.875rem;
-        font-weight: 500;
-        padding: 0.5rem 1rem;
-        transition: all 0.15s ease-in-out;
-        border: 1px solid hsl(var(--border));
-        background-color: hsl(var(--card));
-        color: hsl(var(--card-foreground));
-        cursor: pointer;
-      }
-      
-      .btn-critical:hover {
-        background-color: hsl(var(--primary));
-        color: hsl(var(--primary-foreground));
-      }
-    </style>
-    
-    <!-- Resource Hints for Performance -->
-    <link rel="preconnect" href="https://uktpbcpzzxbbsoixiioq.supabase.co" crossorigin>
-    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
-    <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
-    <link rel="dns-prefetch" href="https://analytics.google.com">
-    
-    <!-- Load Google Fonts with font-display: swap for faster rendering -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap"></noscript>
-    
     <!-- Security Headers -->
     <meta http-equiv="Content-Security-Policy"
       content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https: https://www.google-analytics.com; font-src 'self' data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com https://analytics.google.com; media-src 'self' blob: https:; object-src 'none'; base-uri 'self'; form-action 'self';">
@@ -140,9 +30,8 @@
       });
     </script>
 
-    <!-- Favicon with preload for critical icons -->
+    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="preload" as="image" href="/icon-192x192.png" type="image/png">
     <link rel="icon" type="image/png" sizes="32x32" href="/icon-192x192.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="/icon-192x192.png" />
     <link rel="apple-touch-icon" sizes="512x512" href="/icon-512x512.png" />
@@ -166,29 +55,8 @@
   </head>
 
   <body>
-    <div id="root">
-      <!-- Enhanced loading fallback -->
-      <div class="loading-fallback">
-        <div class="loading-spinner"></div>
-        <div>Loading Wish Wall...</div>
-      </div>
-    </div>
-    
-    <!-- Optimized module loading -->
+    <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    
-    <!-- Debug script to monitor loading -->
-    <script>
-      console.log('HTML: Page loaded, starting React app...');
-      
-      // Monitor for stuck loading states
-      setTimeout(function() {
-        const fallback = document.querySelector('.loading-fallback');
-        if (fallback && fallback.style.display !== 'none') {
-          console.warn('HTML: Loading seems stuck after 10 seconds');
-        }
-      }, 10000);
-    </script>
   </body>
 
 </html>

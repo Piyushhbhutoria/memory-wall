@@ -7,10 +7,10 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instantiate createClient with right options
+  // Allows to automatically instanciate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "13.0.4"
+    PostgrestVersion: "12.2.12 (cd3cf9e)"
   }
   public: {
     Tables: {
@@ -199,28 +199,13 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      detect_suspicious_activity: {
-        Args: { activity_type: string; fingerprint: string }
-        Returns: boolean
-      }
       log_security_event: {
-        Args:
-          | {
-              description: string
-              event_type: string
-              metadata?: Json
-              user_fingerprint?: string
-            }
-          | {
-              description: string
-              event_type: string
-              user_fingerprint?: string
-            }
+        Args: {
+          event_type: string
+          description: string
+          user_fingerprint?: string
+        }
         Returns: undefined
-      }
-      mask_user_id: {
-        Args: { user_id: string }
-        Returns: string
       }
     }
     Enums: {

@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
@@ -29,12 +28,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log('AuthProvider: Initializing auth state listener...');
-    
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
-        console.log('AuthProvider: Auth state changed:', event, !!session);
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
@@ -42,32 +38,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     );
 
     // THEN check for existing session
-    supabase.auth.getSession().then(({ data: { session }, error }) => {
-      console.log('AuthProvider: Got initial session:', !!session, error);
+    supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
-    }).catch((error) => {
-      console.error('AuthProvider: Error getting session:', error);
-      setLoading(false);
     });
 
-    return () => {
-      console.log('AuthProvider: Cleaning up auth listener');
-      subscription.unsubscribe();
-    };
+    return () => subscription.unsubscribe();
   }, []);
 
   const signUp = async (email: string, password: string, displayName?: string) => {
-    // Import password validation
-    const { passwordSchema } = await import('@/lib/security');
-    
-    // Validate password strength
-    const passwordValidation = passwordSchema.safeParse(password);
-    if (!passwordValidation.success) {
-      return { error: { message: passwordValidation.error.errors[0].message } };
-    }
-    
     const redirectUrl = `${window.location.origin}/`;
     
     const { error } = await supabase.auth.signUp({
@@ -82,21 +62,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signIn = async (email: string, password: string) => {
-    const { logSecurityEvent } = await import('@/lib/security');
-    
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
-    
-    // Log failed sign-in attempts for security monitoring
-    if (error) {
-      await logSecurityEvent('failed_signin_attempt', `Failed sign-in attempt for email: ${email}`, undefined, {
-        error_code: error.message,
-        timestamp: new Date().toISOString()
-      });
-    }
-    
     return { error };
   };
 
@@ -139,8 +108,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     signOut,
     loading,
   };
-
-  console.log('AuthProvider: Rendering with loading:', loading, 'user:', !!user);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
