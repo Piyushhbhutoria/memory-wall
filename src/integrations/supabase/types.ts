@@ -7,190 +7,101 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "12.2.12 (cd3cf9e)"
+    PostgrestVersion: "13.0.4"
   }
   public: {
     Tables: {
-      comments: {
+      anonymous_messages: {
         Row: {
-          author_fingerprint: string | null
-          author_name: string | null
           content: string
           created_at: string
+          feedback_request_id: string
           id: string
-          memory_id: string
+          is_read: boolean
         }
         Insert: {
-          author_fingerprint?: string | null
-          author_name?: string | null
           content: string
           created_at?: string
+          feedback_request_id: string
           id?: string
-          memory_id: string
+          is_read?: boolean
         }
         Update: {
-          author_fingerprint?: string | null
-          author_name?: string | null
           content?: string
           created_at?: string
+          feedback_request_id?: string
           id?: string
-          memory_id?: string
+          is_read?: boolean
         }
         Relationships: [
           {
-            foreignKeyName: "comments_memory_id_fkey"
-            columns: ["memory_id"]
+            foreignKeyName: "anonymous_messages_feedback_request_id_fkey"
+            columns: ["feedback_request_id"]
             isOneToOne: false
-            referencedRelation: "memories"
+            referencedRelation: "feedback_requests"
             referencedColumns: ["id"]
           },
         ]
       }
-      memories: {
+      feedback_requests: {
         Row: {
-          author_fingerprint: string | null
-          author_name: string | null
-          content: string | null
           created_at: string
           id: string
-          media_type: string | null
-          media_url: string | null
-          type: string
-          updated_at: string
-          wall_id: string
+          is_active: boolean
+          name: string
+          unique_slug: string
+          user_id: string
         }
         Insert: {
-          author_fingerprint?: string | null
-          author_name?: string | null
-          content?: string | null
           created_at?: string
           id?: string
-          media_type?: string | null
-          media_url?: string | null
-          type: string
-          updated_at?: string
-          wall_id: string
+          is_active?: boolean
+          name: string
+          unique_slug: string
+          user_id: string
         }
         Update: {
-          author_fingerprint?: string | null
-          author_name?: string | null
-          content?: string | null
           created_at?: string
           id?: string
-          media_type?: string | null
-          media_url?: string | null
-          type?: string
-          updated_at?: string
-          wall_id?: string
+          is_active?: boolean
+          name?: string
+          unique_slug?: string
+          user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "memories_wall_id_fkey"
-            columns: ["wall_id"]
+            foreignKeyName: "feedback_requests_user_id_fkey"
+            columns: ["user_id"]
             isOneToOne: false
-            referencedRelation: "walls"
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
       }
       profiles: {
         Row: {
-          avatar_url: string | null
           created_at: string
-          display_name: string | null
+          email: string | null
           id: string
+          name: string
           updated_at: string
-          user_id: string
         }
         Insert: {
-          avatar_url?: string | null
           created_at?: string
-          display_name?: string | null
+          email?: string | null
           id?: string
-          updated_at?: string
-          user_id: string
-        }
-        Update: {
-          avatar_url?: string | null
-          created_at?: string
-          display_name?: string | null
-          id?: string
-          updated_at?: string
-          user_id?: string
-        }
-        Relationships: []
-      }
-      reactions: {
-        Row: {
-          author_fingerprint: string
-          created_at: string
-          emoji: string
-          id: string
-          memory_id: string
-        }
-        Insert: {
-          author_fingerprint: string
-          created_at?: string
-          emoji: string
-          id?: string
-          memory_id: string
-        }
-        Update: {
-          author_fingerprint?: string
-          created_at?: string
-          emoji?: string
-          id?: string
-          memory_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "reactions_memory_id_fkey"
-            columns: ["memory_id"]
-            isOneToOne: false
-            referencedRelation: "memories"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      walls: {
-        Row: {
-          cover_photo_url: string | null
-          created_at: string
-          expires_at: string
-          host_user_id: string | null
-          id: string
-          is_active: boolean | null
-          is_paid: boolean | null
-          max_memories: number | null
           name: string
-          theme_color: string | null
-        }
-        Insert: {
-          cover_photo_url?: string | null
-          created_at?: string
-          expires_at?: string
-          host_user_id?: string | null
-          id?: string
-          is_active?: boolean | null
-          is_paid?: boolean | null
-          max_memories?: number | null
-          name: string
-          theme_color?: string | null
+          updated_at?: string
         }
         Update: {
-          cover_photo_url?: string | null
           created_at?: string
-          expires_at?: string
-          host_user_id?: string | null
+          email?: string | null
           id?: string
-          is_active?: boolean | null
-          is_paid?: boolean | null
-          max_memories?: number | null
           name?: string
-          theme_color?: string | null
+          updated_at?: string
         }
         Relationships: []
       }
@@ -199,14 +110,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      log_security_event: {
-        Args: {
-          event_type: string
-          description: string
-          user_fingerprint?: string
-        }
-        Returns: undefined
-      }
+      [_ in never]: never
     }
     Enums: {
       [_ in never]: never
