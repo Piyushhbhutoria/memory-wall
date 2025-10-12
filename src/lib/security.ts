@@ -1,11 +1,27 @@
 import DOMPurify from 'dompurify';
 import { z } from 'zod';
 
+// Dangerous patterns for XSS detection
+const dangerousPatterns = [
+  /<script/gi,
+  /javascript:/gi,
+  /on\w+\s*=/gi, // Event handlers (onclick, onerror, etc.)
+  /data:text\/html/gi,
+  /<iframe/gi,
+  /<object/gi,
+  /<embed/gi,
+  /vbscript:/gi,
+  /<form/gi
+];
+
 // Input validation schemas
 export const memoryContentSchema = z.object({
   content: z.string()
     .max(2000, 'Content must be less than 2000 characters')
-    .refine(val => !val.includes('<script'), 'Invalid content'),
+    .refine(
+      val => !dangerousPatterns.some(pattern => pattern.test(val)),
+      'Content contains potentially unsafe code'
+    ),
   authorName: z.string()
     .min(1, 'Author name is required')
     .max(50, 'Author name must be less than 50 characters')
@@ -17,7 +33,10 @@ export const commentSchema = z.object({
   content: z.string()
     .min(1, 'Comment cannot be empty')
     .max(500, 'Comment must be less than 500 characters')
-    .refine(val => !val.includes('<script'), 'Invalid content'),
+    .refine(
+      val => !dangerousPatterns.some(pattern => pattern.test(val)),
+      'Content contains potentially unsafe code'
+    ),
   authorName: z.string()
     .min(1, 'Name is required')
     .max(50, 'Name must be less than 50 characters')
