@@ -101,6 +101,13 @@ export type Database = {
             referencedRelation: "walls"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "memories_wall_id_fkey"
+            columns: ["wall_id"]
+            isOneToOne: false
+            referencedRelation: "walls_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
       reactions: {
@@ -264,6 +271,13 @@ export type Database = {
             referencedRelation: "walls"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "memories_wall_id_fkey"
+            columns: ["wall_id"]
+            isOneToOne: false
+            referencedRelation: "walls_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
       reactions_public: {
@@ -301,6 +315,42 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      walls_public: {
+        Row: {
+          cover_photo_url: string | null
+          created_at: string | null
+          expires_at: string | null
+          id: string | null
+          is_active: boolean | null
+          is_paid: boolean | null
+          max_memories: number | null
+          name: string | null
+          theme_color: string | null
+        }
+        Insert: {
+          cover_photo_url?: string | null
+          created_at?: string | null
+          expires_at?: string | null
+          id?: string | null
+          is_active?: boolean | null
+          is_paid?: boolean | null
+          max_memories?: number | null
+          name?: string | null
+          theme_color?: string | null
+        }
+        Update: {
+          cover_photo_url?: string | null
+          created_at?: string | null
+          expires_at?: string | null
+          id?: string | null
+          is_active?: boolean | null
+          is_paid?: boolean | null
+          max_memories?: number | null
+          name?: string | null
+          theme_color?: string | null
+        }
+        Relationships: []
       }
     }
     Functions: {

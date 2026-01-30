@@ -72,14 +72,35 @@ const WallView = () => {
 
   const loadWall = async () => {
     try {
-      const { data, error } = await supabase
-        .from('walls')
+      // Use public view that excludes host_user_id for privacy
+      const { data: publicData, error: publicError } = await supabase
+        .from('walls_public')
         .select('*')
         .eq('id', wallId)
         .single();
 
-      if (error) throw error;
-      setWall(data);
+      if (publicError) throw publicError;
+      
+      // For authenticated users, check if they're the host (separate secure query)
+      let hostUserId: string | null = null;
+      if (user) {
+        const { data: hostData } = await supabase
+          .from('walls')
+          .select('host_user_id')
+          .eq('id', wallId)
+          .eq('host_user_id', user.id)
+          .single();
+        
+        if (hostData) {
+          hostUserId = hostData.host_user_id;
+        }
+      }
+      
+      // Combine public data with host info (only if user is the host)
+      setWall({
+        ...publicData,
+        host_user_id: hostUserId
+      } as Wall);
     } catch (error: any) {
       toast({
         title: "Wall not found",
