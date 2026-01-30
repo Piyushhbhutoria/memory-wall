@@ -67,21 +67,28 @@ export const AddMemoryModal: React.FC<AddMemoryModalProps> = ({
   };
 
   const uploadFile = async (file: File): Promise<string> => {
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
-    const filePath = `${wallId}/${fileName}`;
+    // Use Edge Function for anonymous uploads with server-side validation
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('fingerprint', fingerprint || 'anonymous');
+    formData.append('wallId', wallId);
 
-    const { error: uploadError } = await supabase.storage
-      .from('wall-media')
-      .upload(filePath, file);
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+    const response = await fetch(`${supabaseUrl}/functions/v1/upload-media`, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`
+      }
+    });
 
-    if (uploadError) throw uploadError;
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Upload failed');
+    }
 
-    const { data } = supabase.storage
-      .from('wall-media')
-      .getPublicUrl(filePath);
-
-    return data.publicUrl;
+    const { url } = await response.json();
+    return url;
   };
 
   const saveSketch = async (): Promise<string | null> => {
