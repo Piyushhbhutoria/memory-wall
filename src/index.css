@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cascadia+Code&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -9,45 +12,45 @@
 @layer base {
   :root {
     /* Core Brand Colors */
-    --background: 0 0% 100%;
-    --foreground: 224 71% 4%;
+    --background: 220 13% 98%;
+    --foreground: 210 11% 15%;
 
     /* Card System */
-    --card: 0 0% 100%;
-    --card-foreground: 224 71% 4%;
+    --card: 0 0% 100% / 0.6;
+    --card-foreground: 210 11% 15%;
 
     /* Interactive Elements */
-    --popover: 0 0% 100%;
-    --popover-foreground: 224 71% 4%;
+    --popover: 0 0% 100% / 0.7;
+    --popover-foreground: 210 11% 15%;
 
     /* Brand Colors - Modern Purple/Blue Gradient */
-    --primary: 262 83% 58%;
-    --primary-foreground: 210 20% 98%;
+    --primary: 178 78% 40%;
+    --primary-foreground: 0 0% 100%;
     --primary-glow: 269 100% 75%;
 
     /* Secondary - Warm Accent */
-    --secondary: 213 27% 84%;
-    --secondary-foreground: 216 50% 16%;
+    --secondary: 0 0% 100% / 0.08;
+    --secondary-foreground: 210 11% 15%;
 
     /* Neutral Palette */
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 8% 46%;
+    --muted: 0 0% 100% / 0.05;
+    --muted-foreground: 220 9% 46%;
 
     /* Accent - Complementary Orange */
-    --accent: 25 95% 53%;
-    --accent-foreground: 210 20% 98%;
+    --accent: 178 78% 40%;
+    --accent-foreground: 0 0% 100%;
 
     /* System Colors */
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 210 20% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
 
     /* UI Elements */
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 262 83% 58%;
+    --border: 0 0% 0% / 0.05;
+    --input: 0 0% 100% / 0.7;
+    --ring: 178 78% 40% / 0.3;
 
     /* Design System Values */
-    --radius: 0.75rem;
+    --radius: 1.5rem;
     --shadow-color: 262 83% 58%;
 
     /* Gradients */
@@ -57,9 +60,9 @@
     --gradient-background: linear-gradient(180deg, hsl(0 0% 100%), hsl(220 14% 98%));
 
     /* Shadows */
-    --shadow-sm: 0 1px 2px 0 hsl(var(--shadow-color) / 0.05);
-    --shadow-md: 0 4px 6px -1px hsl(var(--shadow-color) / 0.1), 0 2px 4px -2px hsl(var(--shadow-color) / 0.1);
-    --shadow-lg: 0 10px 15px -3px hsl(var(--shadow-color) / 0.1), 0 4px 6px -4px hsl(var(--shadow-color) / 0.1);
+    --shadow-sm: 0px 1px 2.5px 0px hsla(0, 0%, 0%, 0.25);
+    --shadow-md: 0px 1px 7.5px 0px hsla(0, 0%, 0%, 0.25);
+    --shadow-lg: 0px 1px 12.5px 0px hsla(0, 0%, 0%, 0.25);
     --shadow-xl: 0 20px 25px -5px hsl(var(--shadow-color) / 0.1), 0 8px 10px -6px hsl(var(--shadow-color) / 0.1);
     --shadow-glow: 0 0 40px hsl(var(--primary-glow) / 0.3);
 
@@ -68,46 +71,56 @@
     --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     /* Sidebar */
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 0 0% 100% / 0.6;
+    --sidebar-foreground: 210 11% 15%;
+    --sidebar-primary: 178 78% 40%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 100% / 0.08;
+    --sidebar-accent-foreground: 210 11% 15%;
+    --sidebar-border: 0 0% 0% / 0.05;
+    --sidebar-ring: 178 78% 40% / 0.3;
+    --glass-light: rgba(255, 255, 255, 0.6);
+    --glass-input: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(0, 0, 0, 0.05);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    --glass-shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.15);
+    --inner-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    --font-serif: "Crimson Text", ui-serif, Georgia, Cambria, Times New Roman, Times, serif;
+    --font-mono: "Cascadia Code", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    --shadow: 0px 1px 5px 0px hsla(0, 0%, 0%, 0.25);
   }
 
   .dark {
     /* Dark Theme */
-    --background: 224 71% 4%;
-    --foreground: 210 20% 98%;
+    --background: 222 84% 5%;
+    --foreground: 210 40% 98%;
 
-    --card: 224 71% 4%;
-    --card-foreground: 210 20% 98%;
+    --card: 0 0% 100% / 0.05;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 224 71% 4%;
-    --popover-foreground: 210 20% 98%;
+    --popover: 0 0% 100% / 0.07;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 269 100% 75%;
-    --primary-foreground: 224 71% 4%;
+    --primary: 158 64% 52%;
+    --primary-foreground: 0 0% 100%;
     --primary-glow: 262 83% 58%;
 
-    --secondary: 215 27% 16%;
-    --secondary-foreground: 210 20% 98%;
+    --secondary: 0 0% 100% / 0.05;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 215 27% 16%;
-    --muted-foreground: 217 10% 64%;
+    --muted: 0 0% 100% / 0.05;
+    --muted-foreground: 215 20% 65%;
 
-    --accent: 25 95% 53%;
-    --accent-foreground: 210 20% 98%;
+    --accent: 158 64% 52%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 62% 50%;
-    --destructive-foreground: 210 20% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 215 27% 16%;
-    --input: 215 27% 16%;
-    --ring: 269 100% 75%;
+    --border: 0 0% 100% / 0.1;
+    --input: 0 0% 100% / 0.07;
+    --ring: 158 64% 52% / 0.3;
 
     /* Dark Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(269 100% 75%), hsl(262 83% 58%));
@@ -115,14 +128,28 @@
     --gradient-background: linear-gradient(180deg, hsl(224 71% 4%), hsl(217 27% 8%));
 
     --shadow-color: 269 100% 75%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-background: 0 0% 100% / 0.05;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 158 64% 52%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 0 0% 100% / 0.05;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 0 0% 100% / 0.1;
+    --sidebar-ring: 158 64% 52% / 0.3;
+    --glass-light: rgba(255, 255, 255, 0.05);
+    --glass-input: rgba(255, 255, 255, 0.07);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    --glass-shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.6);
+    --inner-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    --font-serif: "Crimson Text", ui-serif, Georgia, Cambria, Times New Roman, Times, serif;
+    --font-mono: "Cascadia Code", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    --radius: 1.5rem;
+    --shadow-sm: 0px 1px 2.5px 0px hsla(0, 0%, 0%, 0.25);
+    --shadow: 0px 1px 5px 0px hsla(0, 0%, 0%, 0.25);
+    --shadow-md: 0px 1px 7.5px 0px hsla(0, 0%, 0%, 0.25);
+    --shadow-lg: 0px 1px 12.5px 0px hsla(0, 0%, 0%, 0.25);
   }
 }
 
