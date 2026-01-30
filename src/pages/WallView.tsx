@@ -228,8 +228,8 @@ const WallView = () => {
               <div className="flex items-center gap-1">
                 {wall.is_active ? (
                   <>
-                    <Eye className="h-4 w-4 text-green-500" />
-                    <span className="text-green-500">Publicly shared</span>
+                    <Eye className="h-4 w-4 text-primary" />
+                    <span className="text-primary">Publicly shared</span>
                   </>
                 ) : (
                   <>
