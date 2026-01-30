@@ -101,7 +101,7 @@ const Index = () => {
                     alt="Wish Wall Logo"
                     className="w-6 h-6 object-contain dark:invert"
                   />
-                  <span className="text-sm font-medium bg-gradient-primary bg-clip-text text-transparent">
+                  <span className="text-sm font-medium gradient-text">
                     Digital Wish Walls
                   </span>
                 </div>
