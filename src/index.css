@@ -23,10 +23,10 @@
     --popover: 0 0% 100% / 0.7;
     --popover-foreground: 210 11% 15%;
 
-    /* Brand Colors - Modern Purple/Blue Gradient */
+    /* Brand Colors - Modern Teal/Cyan */
     --primary: 178 78% 40%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 269 100% 75%;
+    --primary-glow: 178 78% 55%;
 
     /* Secondary - Warm Accent */
     --secondary: 0 0% 100% / 0.08;
@@ -52,12 +52,12 @@
 
     /* Design System Values */
     --radius: 1.5rem;
-    --shadow-color: 262 83% 58%;
+    --shadow-color: 178 78% 40%;
 
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(262 83% 58%), hsl(269 100% 75%));
+    --gradient-primary: linear-gradient(135deg, hsl(178 78% 35%), hsl(178 78% 50%));
     --gradient-secondary: linear-gradient(135deg, hsl(213 27% 84%), hsl(220 14% 96%));
-    --gradient-accent: linear-gradient(135deg, hsl(25 95% 53%), hsl(45 93% 58%));
+    --gradient-accent: linear-gradient(135deg, hsl(178 78% 40%), hsl(178 78% 55%));
     --gradient-background: linear-gradient(180deg, hsl(0 0% 100%), hsl(220 14% 98%));
 
     /* Shadows */
@@ -105,7 +105,7 @@
 
     --primary: 158 64% 52%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 262 83% 58%;
+    --primary-glow: 158 64% 65%;
 
     --secondary: 0 0% 100% / 0.05;
     --secondary-foreground: 210 40% 98%;
@@ -125,11 +125,11 @@
     --ring: 158 64% 52% / 0.3;
 
     /* Dark Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(269 100% 75%), hsl(262 83% 58%));
+    --gradient-primary: linear-gradient(135deg, hsl(158 64% 52%), hsl(158 64% 42%));
     --gradient-secondary: linear-gradient(135deg, hsl(215 27% 16%), hsl(217 27% 20%));
     --gradient-background: linear-gradient(180deg, hsl(224 71% 4%), hsl(217 27% 8%));
 
-    --shadow-color: 269 100% 75%;
+    --shadow-color: 158 64% 52%;
     --sidebar-background: 0 0% 100% / 0.05;
     --sidebar-foreground: 210 40% 98%;
     --sidebar-primary: 158 64% 52%;
@@ -194,7 +194,7 @@
   }
 
   .hover-glow {
-    @apply transition-all duration-300 hover:shadow-[0_0_30px_rgba(124,58,237,0.3)];
+    @apply transition-all duration-300 hover:shadow-glow;
   }
 
   /* Card Variants */
