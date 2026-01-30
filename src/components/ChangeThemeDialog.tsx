@@ -112,10 +112,10 @@ export const ChangeThemeDialog: React.FC<ChangeThemeDialogProps> = ({
                 <button
                   key={color}
                   type="button"
-                  className={`w-10 h-10 rounded-full border-2 transition-all relative hover:scale-105 ${
+                  className={`w-10 h-10 rounded-full border-2 transition-all duration-300 relative hover:scale-110 ${
                     selectedColor === color 
-                      ? 'border-foreground ring-2 ring-ring ring-offset-2' 
-                      : 'border-muted'
+                      ? 'border-primary ring-2 ring-ring ring-offset-2' 
+                      : 'border-border hover:border-primary/30'
                   }`}
                   style={{ backgroundColor: color }}
                   onClick={() => setSelectedColor(color)}
@@ -134,10 +134,9 @@ export const ChangeThemeDialog: React.FC<ChangeThemeDialogProps> = ({
               Cancel
             </Button>
             <Button 
+              variant="gradient"
               onClick={handleUpdateTheme}
               disabled={isUpdating || selectedColor === wall.theme_color}
-              style={{ backgroundColor: selectedColor }}
-              className="text-white"
             >
               {isUpdating ? 'Updating...' : 'Update Theme'}
             </Button>

@@ -267,7 +267,7 @@ const Index = () => {
                               {wall.name}
                             </CardTitle>
                             <div
-                              className="w-5 h-5 rounded-full border-2 border-white shadow-md group-hover:scale-110 transition-transform"
+                              className="w-5 h-5 rounded-full border-2 border-background shadow-md group-hover:scale-110 transition-transform"
                               style={{ backgroundColor: wall.theme_color }}
                             />
                             {!wall.is_active && (

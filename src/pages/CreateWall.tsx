@@ -94,10 +94,10 @@ const CreateWall = () => {
             Back to Home
           </Button>
 
-          <Card>
+          <Card className="card-elevated">
             <CardHeader>
-              <CardTitle className="text-2xl">Create a Wish Wall</CardTitle>
-              <CardDescription>
+              <CardTitle className="text-2xl font-serif">Create a Wish Wall</CardTitle>
+              <CardDescription className="text-muted-foreground">
                 Set up your digital wish wall for friends and family to share special moments
               </CardDescription>
             </CardHeader>
@@ -126,10 +126,10 @@ const CreateWall = () => {
                       <button
                         key={color}
                         type="button"
-                        className={`w-12 h-12 rounded-full border-2 transition-all ${
+                        className={`w-12 h-12 rounded-full border-2 transition-all duration-300 hover:scale-110 ${
                           themeColor === color 
-                            ? 'border-foreground scale-110' 
-                            : 'border-muted hover:scale-105'
+                            ? 'border-primary ring-2 ring-ring ring-offset-2' 
+                            : 'border-border hover:border-primary/30'
                         }`}
                         style={{ backgroundColor: color }}
                         onClick={() => setThemeColor(color)}
@@ -144,7 +144,7 @@ const CreateWall = () => {
                     <p>• Anyone can contribute with just a link</p>
                     <p>• Share with QR codes or direct links</p>
                   </div>
-                  <Button type="submit" className="w-full" disabled={isLoading}>
+                  <Button type="submit" variant="gradient" className="w-full" disabled={isLoading}>
                     {isLoading ? 'Creating...' : 'Create Wall'}
                   </Button>
                 </div>

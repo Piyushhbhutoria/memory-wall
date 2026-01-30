@@ -198,7 +198,7 @@ export const MemoryCard: React.FC<MemoryCardProps> = ({
 
   return (
     <Card 
-      className={`cursor-pointer hover:shadow-lg transition-all duration-200 ${className}`}
+      className={`cursor-pointer hover:shadow-lg transition-all duration-300 bg-card border-border hover:border-primary/20 ${className}`}
       onClick={!isExpanded ? onClick : undefined}
     >
       {isExpanded && onClose && (
