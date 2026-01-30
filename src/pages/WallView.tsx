@@ -217,8 +217,7 @@ const WallView = () => {
     <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
       <div
-        className="border-b"
-        style={{ backgroundColor: `${wall.theme_color}15` }}
+        className="border-b border-border bg-card/50 backdrop-blur-sm"
       >
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
@@ -296,8 +295,7 @@ const WallView = () => {
             <div className="flex flex-wrap gap-2">
               <Button
                 onClick={() => setIsAddModalOpen(true)}
-                style={{ backgroundColor: wall.theme_color }}
-                className="text-white hover:opacity-90"
+                variant="gradient"
               >
                 <Plus className="mr-2 h-4 w-4" />
                 Add Wish
@@ -343,7 +341,7 @@ const WallView = () => {
       <div className="flex-1">
         <div id="wall-export-content" className="max-w-7xl mx-auto px-4 py-8">
           <div className="mb-6 text-center">
-            <h2 className="text-2xl font-bold mb-2" style={{ color: wall.theme_color }}>
+            <h2 className="text-2xl font-bold mb-2 text-primary">
               {wall.name}
             </h2>
             <p className="text-muted-foreground">

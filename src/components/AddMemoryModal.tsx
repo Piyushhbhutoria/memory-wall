@@ -253,9 +253,9 @@ export const AddMemoryModal: React.FC<AddMemoryModalProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-auto">
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-auto bg-card border-border">
         <DialogHeader>
-          <DialogTitle>Share a Wish</DialogTitle>
+          <DialogTitle className="text-xl font-serif">Share a Wish</DialogTitle>
         </DialogHeader>
 
         <div className="space-y-4">
@@ -272,16 +272,16 @@ export const AddMemoryModal: React.FC<AddMemoryModalProps> = ({
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="text" className="flex items-center gap-2">
+            <TabsList className="grid w-full grid-cols-3 bg-muted/50">
+              <TabsTrigger value="text" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
                 <Type className="h-4 w-4" />
                 Text
               </TabsTrigger>
-              <TabsTrigger value="upload" className="flex items-center gap-2">
+              <TabsTrigger value="upload" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
                 <Upload className="h-4 w-4" />
                 Upload
               </TabsTrigger>
-              <TabsTrigger value="sketch" className="flex items-center gap-2">
+              <TabsTrigger value="sketch" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
                 <Palette className="h-4 w-4" />
                 Sketch
               </TabsTrigger>
@@ -388,11 +388,11 @@ export const AddMemoryModal: React.FC<AddMemoryModalProps> = ({
             </TabsContent>
           </Tabs>
 
-          <div className="flex gap-2 pt-4">
+          <div className="flex gap-2 pt-4 border-t border-border">
             <Button variant="outline" onClick={onClose} className="flex-1">
               Cancel
             </Button>
-            <Button onClick={handleSubmit} disabled={isLoading} className="flex-1">
+            <Button variant="gradient" onClick={handleSubmit} disabled={isLoading} className="flex-1">
               {isLoading ? 'Sharing...' : 'Share Wish'}
             </Button>
           </div>

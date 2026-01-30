@@ -189,7 +189,7 @@ export const WallManagement: React.FC<WallManagementProps> = ({
             <AlertDialogAction
               onClick={handleToggleSharing}
               disabled={isToggling}
-              className={wall.is_active ? "bg-destructive hover:bg-destructive/90" : ""}
+              className={wall.is_active ? "bg-destructive hover:bg-destructive/90 text-destructive-foreground" : "bg-primary hover:bg-primary/90 text-primary-foreground"}
             >
               {isToggling ? "Updating..." : (wall.is_active ? "Stop Sharing" : "Resume Sharing")}
             </AlertDialogAction>
