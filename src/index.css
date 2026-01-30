@@ -24,7 +24,7 @@
     --popover-foreground: 210 11% 15%;
 
     /* Brand Colors - Modern Purple/Blue Gradient */
-    --primary: 178 78% 40%;
+    --primary: 262 83% 58%;
     --primary-foreground: 0 0% 100%;
     --primary-glow: 269 100% 75%;
 
@@ -37,18 +37,18 @@
     --muted-foreground: 220 9% 46%;
 
     /* Accent - Complementary Orange */
-    --accent: 178 78% 40%;
+    --accent: 25 95% 53%;
     --accent-foreground: 0 0% 100%;
 
     /* System Colors */
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
-    --success: 158 64% 40%;
+    --success: 142 76% 36%;
     --success-foreground: 0 0% 100%;
     /* UI Elements */
     --border: 0 0% 0% / 0.05;
     --input: 0 0% 100% / 0.7;
-    --ring: 178 78% 40% / 0.3;
+    --ring: 262 83% 58% / 0.3;
 
     /* Design System Values */
     --radius: 1.5rem;
@@ -74,12 +74,12 @@
     /* Sidebar */
     --sidebar-background: 0 0% 100% / 0.6;
     --sidebar-foreground: 210 11% 15%;
-    --sidebar-primary: 178 78% 40%;
+    --sidebar-primary: 262 83% 58%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 0 0% 100% / 0.08;
     --sidebar-accent-foreground: 210 11% 15%;
     --sidebar-border: 0 0% 0% / 0.05;
-    --sidebar-ring: 178 78% 40% / 0.3;
+    --sidebar-ring: 262 83% 58% / 0.3;
     --glass-light: rgba(255, 255, 255, 0.6);
     --glass-input: rgba(255, 255, 255, 0.7);
     --glass-border: rgba(0, 0, 0, 0.05);
@@ -103,7 +103,7 @@
     --popover: 0 0% 100% / 0.07;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 158 64% 52%;
+    --primary: 269 100% 75%;
     --primary-foreground: 0 0% 100%;
     --primary-glow: 262 83% 58%;
 
@@ -113,16 +113,16 @@
     --muted: 0 0% 100% / 0.05;
     --muted-foreground: 215 20% 65%;
 
-    --accent: 158 64% 52%;
+    --accent: 25 95% 60%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 100%;
-    --success: 158 64% 52%;
+    --success: 142 76% 36%;
     --success-foreground: 0 0% 100%;
     --border: 0 0% 100% / 0.1;
     --input: 0 0% 100% / 0.07;
-    --ring: 158 64% 52% / 0.3;
+    --ring: 269 100% 75% / 0.3;
 
     /* Dark Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(269 100% 75%), hsl(262 83% 58%));
@@ -132,12 +132,12 @@
     --shadow-color: 269 100% 75%;
     --sidebar-background: 0 0% 100% / 0.05;
     --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 158 64% 52%;
+    --sidebar-primary: 269 100% 75%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 0 0% 100% / 0.05;
     --sidebar-accent-foreground: 210 40% 98%;
     --sidebar-border: 0 0% 100% / 0.1;
-    --sidebar-ring: 158 64% 52% / 0.3;
+    --sidebar-ring: 269 100% 75% / 0.3;
     --glass-light: rgba(255, 255, 255, 0.05);
     --glass-input: rgba(255, 255, 255, 0.07);
     --glass-border: rgba(255, 255, 255, 0.1);
