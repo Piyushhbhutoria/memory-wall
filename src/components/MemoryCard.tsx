@@ -175,7 +175,7 @@ export const MemoryCard: React.FC<MemoryCardProps> = ({
             <img 
               src={memory.media_url} 
               alt="Sketch"
-              className="w-full rounded-lg bg-white"
+              className="w-full rounded-lg bg-card"
               loading="lazy"
             />
             {memory.content && (
@@ -228,7 +228,7 @@ export const MemoryCard: React.FC<MemoryCardProps> = ({
               e.stopPropagation();
               handleReaction('❤️');
             }}
-            className={`h-8 px-2 ${isLiked ? 'text-red-500' : ''}`}
+            className={`h-8 px-2 ${isLiked ? 'text-destructive' : ''}`}
           >
             <Heart className={`h-4 w-4 ${isLiked ? 'fill-current' : ''}`} />
             <span className="ml-1">{memory.reactions?.length || 0}</span>
