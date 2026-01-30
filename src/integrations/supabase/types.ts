@@ -47,6 +47,13 @@ export type Database = {
             referencedRelation: "memories"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "comments_memory_id_fkey"
+            columns: ["memory_id"]
+            isOneToOne: false
+            referencedRelation: "memories_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
       memories: {
@@ -126,6 +133,13 @@ export type Database = {
             referencedRelation: "memories"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "reactions_memory_id_fkey"
+            columns: ["memory_id"]
+            isOneToOne: false
+            referencedRelation: "memories_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
       walls: {
@@ -169,7 +183,125 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      comments_public: {
+        Row: {
+          author_name: string | null
+          content: string | null
+          created_at: string | null
+          id: string | null
+          memory_id: string | null
+        }
+        Insert: {
+          author_name?: string | null
+          content?: string | null
+          created_at?: string | null
+          id?: string | null
+          memory_id?: string | null
+        }
+        Update: {
+          author_name?: string | null
+          content?: string | null
+          created_at?: string | null
+          id?: string | null
+          memory_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comments_memory_id_fkey"
+            columns: ["memory_id"]
+            isOneToOne: false
+            referencedRelation: "memories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_memory_id_fkey"
+            columns: ["memory_id"]
+            isOneToOne: false
+            referencedRelation: "memories_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      memories_public: {
+        Row: {
+          author_name: string | null
+          content: string | null
+          created_at: string | null
+          id: string | null
+          media_type: string | null
+          media_url: string | null
+          type: string | null
+          updated_at: string | null
+          wall_id: string | null
+        }
+        Insert: {
+          author_name?: string | null
+          content?: string | null
+          created_at?: string | null
+          id?: string | null
+          media_type?: string | null
+          media_url?: string | null
+          type?: string | null
+          updated_at?: string | null
+          wall_id?: string | null
+        }
+        Update: {
+          author_name?: string | null
+          content?: string | null
+          created_at?: string | null
+          id?: string | null
+          media_type?: string | null
+          media_url?: string | null
+          type?: string | null
+          updated_at?: string | null
+          wall_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "memories_wall_id_fkey"
+            columns: ["wall_id"]
+            isOneToOne: false
+            referencedRelation: "walls"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reactions_public: {
+        Row: {
+          created_at: string | null
+          emoji: string | null
+          id: string | null
+          memory_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          emoji?: string | null
+          id?: string | null
+          memory_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          emoji?: string | null
+          id?: string | null
+          memory_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reactions_memory_id_fkey"
+            columns: ["memory_id"]
+            isOneToOne: false
+            referencedRelation: "memories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reactions_memory_id_fkey"
+            columns: ["memory_id"]
+            isOneToOne: false
+            referencedRelation: "memories_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       [_ in never]: never

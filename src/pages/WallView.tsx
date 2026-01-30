@@ -94,18 +94,41 @@ const WallView = () => {
 
   const loadMemories = async () => {
     try {
-      const { data, error } = await supabase
-        .from('memories')
-        .select(`
-          *,
-          reactions (*),
-          comments (*)
-        `)
+      // Use the public view that excludes author_fingerprint for privacy
+      const { data: memoriesData, error: memoriesError } = await supabase
+        .from('memories_public')
+        .select('*')
         .eq('wall_id', wallId)
         .order('created_at', { ascending: false });
 
-      if (error) throw error;
-      setMemories((data || []) as Memory[]);
+      if (memoriesError) throw memoriesError;
+
+      // Fetch reactions and comments separately using public views
+      const memoryIds = (memoriesData || []).map(m => m.id);
+      
+      if (memoryIds.length > 0) {
+        const [reactionsResult, commentsResult] = await Promise.all([
+          supabase
+            .from('reactions_public')
+            .select('*')
+            .in('memory_id', memoryIds),
+          supabase
+            .from('comments_public')
+            .select('*')
+            .in('memory_id', memoryIds)
+        ]);
+
+        // Map reactions and comments to memories
+        const memoriesWithRelations = (memoriesData || []).map(memory => ({
+          ...memory,
+          reactions: (reactionsResult.data || []).filter(r => r.memory_id === memory.id),
+          comments: (commentsResult.data || []).filter(c => c.memory_id === memory.id)
+        }));
+
+        setMemories(memoriesWithRelations as Memory[]);
+      } else {
+        setMemories([]);
+      }
     } catch (error: any) {
       console.error('Error loading memories:', error);
     }
